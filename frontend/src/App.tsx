@@ -5,7 +5,7 @@ import './App.css'
 function App() {
   const [data, setData] = useState([]);
   const fetchData = () => {
-    axios.get("http://127.0.0.1:9000/helloWorld").then(res => {
+    axios.get("http://127.0.0.1:8080/helloWorld").then(res => {
       console.log(res);
       setData(res.data);
     });
