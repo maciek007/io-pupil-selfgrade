@@ -1,10 +1,10 @@
 services:
   backend:
-    image: backend:latest
+    image: spring-docker
     ports:
-      - '9000'
+      - '8080'
 
-#  frontend:
-#    image: frontend:latest
-#    ports:
-#      - '5173:5173'
+  frontend:
+    image: react-docker
+    ports:
+      - '3000:3000'
