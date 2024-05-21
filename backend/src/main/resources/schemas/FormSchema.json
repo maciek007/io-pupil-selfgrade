@@ -4,46 +4,93 @@
   "type": "object",
   "description": "Schema for form answers",
   "properties": {
-    "longerAnswerField": {
-      "type": "string",
-      "description": "Required field for longer answer",
-      "minLength": 1,
-      "pattern": "^\\S+(\\s+\\S+){9,199}$"
-    },
-    "shortAnswerField": {
-      "type": "string",
-      "description": "Optional field for short answer"
-    },
-    "multiSelectionField": {
+    "longQuestionFields": {
       "type": "array",
-      "description": "Optional field for multi selection",
+      "description": "Required field for longer answer",
+      "minItems": 1,
       "items": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^\\S+(\\s+\\S+){9,199}$"
       }
     },
-    "singleSelectionField": {
-      "type": "string",
-      "description": "Optional field for single selection"
+    "shortQuestionFields": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Optional field for short answer",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^\\S+(\\s+\\S+){1,9}$"
+      }
+    },
+    "multiSelectionFields": {
+      "type": "array",
+      "description": "Optional field for multi selection",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "Multi selection field",
+        "additionalProperties": false,
+        "properties": {
+          "options": {
+            "type": "array",
+            "description": "Options for multi selection",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^\\S+(\\s+\\S+)*$"
+            }
+          }
+        }
+      }
+    },
+    "singleSelectionFields": {
+      "type": "array",
+      "description": "Optional field for multi selection",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "Multi selection field",
+        "additionalProperties": false,
+        "properties": {
+          "options": {
+            "type": "array",
+            "description": "Options for multi selection",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^\\S+(\\s+\\S+)*$"
+            }
+          }
+        }
+      }
     },
     "radioButtonFields": {
-      "type": "object",
+      "type": "array",
       "description": "Optional radio buttons",
-      "additionalProperties": {
-        "type": "string"
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^\\S+(\\s+\\S+)*$"
       }
     },
     "checkboxFields": {
-      "type": "object",
+      "type": "array",
       "description": "Optional checkboxes",
-      "additionalProperties": {
-        "type": "boolean"
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^\\S+(\\s+\\S+)*$"
       }
-    }
-  },
-  "additionalProperties": {
-    "type": "object"
-  },
-  "required": [
-    "longerAnswerField"
-  ]
+    },
+    "additionalProperties": false,
+    "required": [
+      "longAnswerField"
+    ]
+  }
 }
