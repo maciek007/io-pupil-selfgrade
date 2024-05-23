@@ -33,7 +33,7 @@ jobs:
           npm install eslint-plugin-react-refresh@0.4.6
 
       - name: Run ESLint
-        run: npx eslint frontend/**
+        run: npx eslint frontend/
           --config frontend/.eslintrc.cjs
           --ext .js,.jsx,.ts,.tsx
           --format @microsoft/eslint-formatter-sarif
