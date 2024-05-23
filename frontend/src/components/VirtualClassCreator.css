@@ -1,0 +1,23 @@
+.controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-width: 20vw;
+}
+
+.logo {
+    width: 250px;
+    height: 250px;
+    padding: 0;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+button, input {
+    margin-top: 15px;
+    min-height: 3em;
+}
