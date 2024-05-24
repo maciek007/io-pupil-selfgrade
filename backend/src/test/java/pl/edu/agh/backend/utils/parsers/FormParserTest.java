@@ -7,7 +7,7 @@ import pl.edu.agh.backend.models.Form;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FormParserTest {
-    private static final String VALID_JSON = "{\"longQuestionFields\":[\"longQuestion1\",\"longQuestion2\"],\"shortQuestionFields\":[\"shortQuestion1\",\"shortQuestion2\"],\"multiSelectionFields\":[{\"options\":[\"option1\",\"option2\", \"options3\"]},{\"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"options\":[\"option5\",\"option6\"]},{\"options\":[\"option7\",\"option8\"]}],\"radioButtonFields\":[\"radioButton1\",\"radioButton2\"],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
+    private static final String VALID_JSON = "{\"longQuestionFields\":[\"Long question is correct. Long question is correct. Long question is correct.\",\"Long question is correct. Long question is correct. Long question is correct.\"],\"shortQuestionFields\":[\"shortQuestion1 shortQuestion1\",\"shortQuestion2 shortQuestion2\"],\"multiSelectionFields\":[{\"options\":[\"option1\",\"option2\", \"options3\"]},{\"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"options\":[\"option5\",\"option6\"]},{\"options\":[\"option7\",\"option8\"]}],\"radioButtonFields\":[\"radioButton1\",\"radioButton2\"],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
 
 
     @Test
