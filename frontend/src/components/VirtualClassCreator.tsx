@@ -1,3 +1,4 @@
+
 import "./VirtualClassCreator.css";
 
 const handleFormChange = () => {
