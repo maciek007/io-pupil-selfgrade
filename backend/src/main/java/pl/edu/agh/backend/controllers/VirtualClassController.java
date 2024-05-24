@@ -38,7 +38,7 @@ public class VirtualClassController {
     @DeleteMapping(path = "")
     public ResponseEntity<Void> deleteVirtualClass(@RequestHeader HttpHeaders headers) throws VirtualClassNotFoundException {
         try {
-            String jwtToken = getToken(headers);
+            String jwtToken = jwtUtils.getToken(headers);
             String name = jwtUtils.extractName(jwtToken);
             if(jwtUtils.isExpired(jwtToken) || !virtualClassService.deleteVirtualClass(name)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -70,7 +70,7 @@ public class VirtualClassController {
     public ResponseEntity<Void> removeStudent(@RequestHeader HttpHeaders headers, @Valid @RequestBody RequestDTO request)
             throws VirtualClassNotFoundException, StudentNotFoundException {
         try {
-            String jwtToken = getToken(headers);
+            String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
             if(jwtUtils.isExpired(jwtToken) || !virtualClassService.removeStudent(request.getName(), authName)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -81,15 +81,6 @@ public class VirtualClassController {
         }
     }
 
-    private String getToken(HttpHeaders headers) throws RequestWithoutAuthorizationException {
-        if (headers == null) {
-            throw new RequestWithoutAuthorizationException();
-        }
-        String authHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RequestWithoutAuthorizationException();
-        }
-        return authHeader.substring("Bearer ".length());
-    }
+
 
 }
