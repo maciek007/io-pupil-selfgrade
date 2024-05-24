@@ -1,0 +1,10 @@
+.logo {
+    width: 100%;
+    height: auto;
+    padding: 0;
+}
+
+button {
+    margin-top: 15px;
+    min-height: 3em;
+}
