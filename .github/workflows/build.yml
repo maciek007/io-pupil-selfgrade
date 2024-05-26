@@ -27,9 +27,9 @@ jobs:
             - name: Copy Stagging
               run: mkdir staging && cp ./backend/target/*.jar staging
             
-            - name: Uploud
-              uses: actions/upload-artifact@v4
-              with:
-                  name: Package
-                  path: staging
+            - uses: actions/checkout@v4
+            - name: Build the Docker images
+              run: |
+                docker build -t spring-docker ./backend
+                docker build -t react-docker ./frontend
 
