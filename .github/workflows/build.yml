@@ -28,6 +28,10 @@ jobs:
                       ${{ runner.os }}-maven-
             - name: Maven Package
               run: mvn -B package -DskipTests -f ./backend/pom.xml
+            
+            # Ensure target directory is created and populated
+            - name: Check target directory
+              run: ls -l ./backend/target
               
             - uses: actions/checkout@v4  
             - name: Build the Docker images
