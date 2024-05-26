@@ -2,7 +2,7 @@ FROM amazoncorretto:21
 
 WORKDIR /app
 
-COPY staging/*.jar app.jar
+COPY target/*.jar app.jar
 
 ENTRYPOINT ["java","-jar","app.jar"]
 
