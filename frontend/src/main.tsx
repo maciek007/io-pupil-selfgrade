@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import StartScreen from "./components/StartScreen.tsx";
 import VirtualClassCreator from "./components/VirtualClassCreator.tsx";
+import LoginScreen from "./components/LoginScreen.tsx";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/join",
-        element: <div>Join</div>
+        element: <LoginScreen/>
+    },
+    {
+        path: "/class",
+        element: <div>Class screen</div>
     }
 ]);
 
