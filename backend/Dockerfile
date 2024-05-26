@@ -3,7 +3,7 @@ VOLUME /tmp
 
 RUN ls /
 
-ARG JAR_FILE=/home/runner/work/io/io/backend/target/backend-0.0.1-SNAPSHOT.jar.original
+ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
