@@ -2,6 +2,8 @@ FROM amazoncorretto:21
 
 WORKDIR /app
 
+RUN ls -la /backend
+
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 
