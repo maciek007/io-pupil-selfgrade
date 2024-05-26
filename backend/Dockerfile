@@ -2,7 +2,9 @@ FROM amazoncorretto:21
 
 WORKDIR /app
 
-ADD target/*.jar app.jar
+COPY . .
+
+RUN ls -al .
 
 ENTRYPOINT ["java","-jar","app.jar"]
 
