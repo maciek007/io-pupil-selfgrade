@@ -8,6 +8,8 @@ import pl.edu.agh.backend.exceptions.types.StudentNotFoundException;
 import pl.edu.agh.backend.exceptions.types.VirtualClassAlreadyCreatedException;
 import pl.edu.agh.backend.exceptions.types.VirtualClassNotFoundException;
 
+import java.util.List;
+
 @Service
 public class VirtualClassService {
     private VirtualClass virtualClass = null;
@@ -19,15 +21,11 @@ public class VirtualClassService {
         virtualClass = new VirtualClass(className);
     }
 
-    public boolean deleteVirtualClass(String name) throws VirtualClassNotFoundException {
+    public void deleteVirtualClass() throws VirtualClassNotFoundException {
         if (virtualClass == null) {
             throw new VirtualClassNotFoundException();
         }
-        if (!virtualClass.getClassName().equals(name)) {
-            return false;
-        }
         virtualClass = null;
-        return true;
     }
 
     public String getAccessCode() throws VirtualClassNotFoundException {
@@ -47,17 +45,33 @@ public class VirtualClassService {
         }
     }
 
-    public boolean removeStudent(String name, String authName)
+    public void removeStudent(String name)
             throws StudentNotFoundException, VirtualClassNotFoundException {
         if (virtualClass == null) {
             throw new VirtualClassNotFoundException();
         }
 
-        if (virtualClass.getClassName().equals(authName) || authName.equals(name)) {
-            if (!virtualClass.removeStudent(name)) {
-                throw new StudentNotFoundException(name);
+        if (!virtualClass.removeStudent(name)) {
+            throw new StudentNotFoundException(name);
+        }
+    }
+
+    public List<String> getStudents() {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getStudents().keySet().stream().toList();
+    }
+
+    public boolean isTeacher(String name) {
+        return name.equals(virtualClass.getClassName());
+    }
+
+    public boolean isStudent(String name) {
+        for (String studentName : virtualClass.getStudents().keySet()) {
+            if (studentName.equals(name)) {
+                return true;
             }
-            return true;
         }
         return false;
     }
