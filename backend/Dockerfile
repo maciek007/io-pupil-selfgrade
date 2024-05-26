@@ -2,16 +2,8 @@ FROM amazoncorretto:21
 
 WORKDIR /app
 
-# Debug step to check contents
-RUN ls -la /app
-
-# Copy the packaged jar file into the container
-# ARG JAR_FILE=target/*.jar
-# COPY ${JAR_FILE} app.jar
-COPY target/backend-0.0.1-SNAPSHOT.jar app.jar
-# Debug step to check the copied file
-RUN ls -la /app
-
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]
 
