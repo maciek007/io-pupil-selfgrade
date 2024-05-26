@@ -29,7 +29,7 @@ jobs:
             - name: Maven Package
               run: mvn -B package -DskipTests -f ./backend/pom.xml
             - name: Check
-              run: ls / 
+              run: ls /home/runner/work/io/io/backend/
             - uses: actions/checkout@v4  
             - name: Build the Docker images
               run: |
