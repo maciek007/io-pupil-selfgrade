@@ -20,7 +20,7 @@ jobs:
                   java-version: '21'
                   distribution: 'temurin'
             - name: Maven build
-              run: mvn --batch-mode --update-snapshots verify
+              run: mvn --batch-mode --update-snapshots -f ./backend/pom.xml verify 
             - name: Copy Stagging
               run: mkdir staging && cp target/*.jar staging
             - name: Uploud
