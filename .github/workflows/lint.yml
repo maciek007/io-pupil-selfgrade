@@ -25,7 +25,7 @@ jobs:
 
       - name: Install ESLint
         run: |
-          npm install
+          npm install ./frontend
 
       - name: Run ESLint
         run: npx eslint ./frontend --config frontend/.eslintrc.cjs --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
