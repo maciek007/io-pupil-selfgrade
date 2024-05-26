@@ -25,7 +25,7 @@ function LoginScreen() {
         joinClass(code, name).then((res) => {
             if (res.data.access != null) {
                 saveToken(res.data.access);
-                navigate("../class");
+                navigate("/class");
             }
         }).catch((e) => {
             if (e.response.status == 409) {
