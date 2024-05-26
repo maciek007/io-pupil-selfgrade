@@ -1,5 +1,4 @@
 FROM amazoncorretto:21
-VOLUME /tmp
 
 WORKDIR /app
 
