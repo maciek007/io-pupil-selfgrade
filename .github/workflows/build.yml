@@ -18,9 +18,9 @@ jobs:
               uses: actions/setup-java@v1
               with:
                   java-version: '21'
-                  
-            - name: Maven build
-              run: mvn --batch-mode --update-snapshots -f ./backend/pom.xml package
+                  cache: maven
+            - name: Build with Maven
+              run: mvn -B package --file ./backend/pom.xml
               
             - name: Check Maven
               run: ls ./backend/target
