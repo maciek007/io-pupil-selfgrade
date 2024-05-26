@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN ls -al .
+RUN ls -al ./backend
 
 ENTRYPOINT ["java","-jar","app.jar"]
 
