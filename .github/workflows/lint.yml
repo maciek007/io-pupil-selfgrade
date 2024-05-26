@@ -30,12 +30,6 @@ jobs:
       - name: Run ESLint
         run: npx eslint ./frontend --config frontend/.eslintrc.cjs --ext .js,.jsx,.ts,.tsx --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
         continue-on-error: true
-
-      - name: List files
-        run: ls -la
-
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+        
+      - name: Show Result
+        run: cat ./eslint-results.sarif
