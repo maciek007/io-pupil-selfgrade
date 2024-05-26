@@ -18,11 +18,15 @@ jobs:
               uses: actions/setup-java@v1
               with:
                   java-version: '21'
-                  distribution: 'temurin'
+                  
             - name: Maven build
               run: mvn --batch-mode --update-snapshots -f ./backend/pom.xml verify 
+            - name: Check Maven
+              run: ls .
+            
             - name: Copy Stagging
               run: mkdir staging && cp target/*.jar staging
+            
             - name: Uploud
               uses: actions/upload-artifact@v4
               with:
