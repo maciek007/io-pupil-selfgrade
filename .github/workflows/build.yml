@@ -20,11 +20,12 @@ jobs:
                   java-version: '21'
                   
             - name: Maven build
-              run: mvn --batch-mode --update-snapshots -f ./backend/pom.xml verify 
+              run: mvn --batch-mode --update-snapshots -f ./backend/pom.xml package
+              
             - name: Check Maven
-              run: ls ./backend
+              run: ls ./backend/target
             
-            - name: Copy Stagging
+            - name: Copy Staging
               run: mkdir staging && cp ./backend/target/*.jar staging
             
             - uses: actions/checkout@v4
