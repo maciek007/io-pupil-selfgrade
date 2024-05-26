@@ -12,6 +12,8 @@ import pl.edu.agh.backend.services.VirtualClassService;
 import pl.edu.agh.backend.utils.API_PATH;
 import pl.edu.agh.backend.utils.jwt.JwtUtils;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin
@@ -40,9 +42,10 @@ public class VirtualClassController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String name = jwtUtils.extractName(jwtToken);
-            if(jwtUtils.isExpired(jwtToken) || !virtualClassService.deleteVirtualClass(name)) {
+            if (jwtUtils.isExpired(jwtToken) || !virtualClassService.isTeacher(name)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
+            virtualClassService.deleteVirtualClass();
             return ResponseEntity.noContent().build();
         } catch (RequestWithoutAuthorizationException e) {
             return ResponseEntity.badRequest().build();
@@ -72,15 +75,38 @@ public class VirtualClassController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if(jwtUtils.isExpired(jwtToken) || !virtualClassService.removeStudent(request.getName(), authName)) {
+            if (jwtUtils.isExpired(jwtToken) || !authName.equals(request.getName())) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
+            virtualClassService.removeStudent(request.getName());
             return ResponseEntity.noContent().build();
         } catch (RequestWithoutAuthorizationException e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
+    @GetMapping(path = "/students")
+    public ResponseEntity<List<String>> getStudents(@RequestHeader HttpHeaders headers) throws VirtualClassNotFoundException {
+        try {
+            String jwtToken = getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+            if (jwtUtils.isExpired(jwtToken) && !virtualClassService.isTeacher(authName) && !virtualClassService.isStudent(authName)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            return ResponseEntity.ok(virtualClassService.getStudents());
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
-
+    private String getToken(HttpHeaders headers) throws RequestWithoutAuthorizationException {
+        if (headers == null) {
+            throw new RequestWithoutAuthorizationException();
+        }
+        String authHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RequestWithoutAuthorizationException();
+        }
+        return authHeader.substring("Bearer ".length());
+    }
 }
