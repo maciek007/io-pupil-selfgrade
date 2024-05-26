@@ -1,0 +1,102 @@
+{
+  "version": "2.1.0",
+  "$schema": "http://json.schemastore.org/sarif-2.1.0-rtm.5",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ESLint",
+          "informationUri": "https://eslint.org",
+          "rules": [
+            {
+              "id": "react-refresh/only-export-components",
+              "helpUri": "Please see details in message",
+              "properties": {
+                "category": "No category provided"
+              }
+            }
+          ],
+          "version": "8.57.0"
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/App.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/components/LoginScreen.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/components/StartScreen.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/components/VirtualClassCreator.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/environments/environment.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/main.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/services/LoginService.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/services/StorageService.tsx"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/src/vite-env.d.ts"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///D:/Studia/Six-Term/io/frontend/vite.config.ts"
+          }
+        }
+      ],
+      "results": [
+        {
+          "level": "warning",
+          "message": {
+            "text": "Fast refresh only works when a file only exports components. Move your component(s) to a separate file."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/Studia/Six-Term/io/frontend/src/services/StorageService.tsx",
+                  "index": 7
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 7,
+                  "endLine": 1,
+                  "endColumn": 13
+                }
+              }
+            }
+          ],
+          "ruleId": "react-refresh/only-export-components",
+          "ruleIndex": 0
+        }
+      ]
+    }
+  ]
+}
