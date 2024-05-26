@@ -2,8 +2,7 @@ FROM amazoncorretto:21
 
 WORKDIR /app
 
-ARG JAR_FILE=staging/*.jar
-COPY ${JAR_FILE} app.jar
+COPY ./backend/staging/*.jar app.jar
 
 ENTRYPOINT ["java","-jar","app.jar"]
 
