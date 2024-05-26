@@ -31,7 +31,7 @@ jobs:
             
             # Ensure target directory is created and populated
             - name: Check target directory
-              run: ls -l ./backend/target
+              run: ls -la ./backend/target
               
             - uses: actions/checkout@v4  
             - name: Build the Docker images
