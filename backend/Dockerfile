@@ -1,10 +1,19 @@
 FROM amazoncorretto:21
 VOLUME /tmp
 
-RUN ls /
+WORKDIR /app
 
+# Debug step to check contents
+RUN ls -la /app
+
+# Copy the packaged jar file into the container
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
+
+# Debug step to check the copied file
+RUN ls -la /app
+
+
 ENTRYPOINT ["java","-jar","/app.jar"]
 
 
