@@ -17,24 +17,15 @@ jobs:
             - name: Set up JDK 21
               uses: actions/setup-java@v1
               with:
-                  java-version: 21
-
-            - name: Cache local Maven repository
-              uses: actions/cache@v2
+                  java-version: '21'
+                  distribution: 'temurin'
+            - name: Maven build
+              run: mvn --batch-mode --update-snapshots verify
+            - name: Copy Stagging
+              run: mkdir staging && cp target/*.jar staging
+            - name: Uploud
+              uses: actions/upload-artifact@v4
               with:
-                  path: ~/.m2
-                  key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-maven-
-            - name: Maven Package
-              run: mvn -B package -DskipTests -f ./backend/pom.xml
-            
-            # Ensure target directory is created and populated
-            - name: Check target directory
-              run: ls -la ./backend/target
-              
-            - uses: actions/checkout@v4  
-            - name: Build the Docker images
-              run: |
-                docker build -t spring-docker ./backend
-                docker build -t react-docker ./frontend
+                  name: Package
+                  path: staging
+
