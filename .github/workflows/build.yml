@@ -1,0 +1,15 @@
+name: Docker Image CI
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker images
+      run: |
+        docker build -t spring-docker ./backend
+        docker build -t react-docker ./frontend
