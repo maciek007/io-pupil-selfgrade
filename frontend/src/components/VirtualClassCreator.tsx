@@ -12,11 +12,11 @@ const handleCreateGame = () => {
 const VirtualClassCreator = () => {
     return (
         <div>
-            <img src="../assets/logo.png" alt="Logo" className="logo"/>
+            <img src="../assets/logo.png" alt="Logo" className="logo" />
             <div className="controls">
                 <input type="text" placeholder="Klasa" className="class-name-input" />
-                <button onClick={handleFormChange}>Wybierz formularz</button>
-                <button onClick={handleCreateGame}>Utwórz nową grę</button>
+                <button className="w-full" onClick={handleFormChange}>Wybierz formularz</button>
+                <button className="w-full" onClick={handleCreateGame}>Utwórz nową grę</button>
             </div>
         </div>
     );
