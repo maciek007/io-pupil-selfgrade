@@ -40,9 +40,8 @@ export function Expandable({
    * Updates the expandable element height.
    */
   const updateElementHeight = () => {
-    element.current!.style.height = `${
-      expanded ? element.current!.scrollHeight : 0
-    }px`;
+    element.current!.style.height = `${expanded ? element.current!.scrollHeight : 0
+      }px`;
   };
 
   // Expand or collapse content when expanded prop change
