@@ -1,6 +1,7 @@
-package pl.edu.agh.backend;
+package pl.edu.agh.backend.models;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -10,6 +11,8 @@ public class VirtualClass {
     private final String className;
     private final HashMap<String, Student> students;
     private final String accessCode;
+    @Setter
+    private Form form;
 
     public VirtualClass(String className) {
         this.className = className;

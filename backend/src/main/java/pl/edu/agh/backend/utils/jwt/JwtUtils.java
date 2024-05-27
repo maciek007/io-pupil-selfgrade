@@ -3,7 +3,9 @@ package pl.edu.agh.backend.utils.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import pl.edu.agh.backend.exceptions.types.RequestWithoutAuthorizationException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -41,5 +43,16 @@ public class JwtUtils {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+    }
+
+    public String getToken(HttpHeaders headers) throws RequestWithoutAuthorizationException {
+        if (headers == null) {
+            throw new RequestWithoutAuthorizationException();
+        }
+        String authHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RequestWithoutAuthorizationException();
+        }
+        return authHeader.substring("Bearer ".length());
     }
 }

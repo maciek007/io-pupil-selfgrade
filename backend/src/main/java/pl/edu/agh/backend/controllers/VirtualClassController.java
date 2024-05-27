@@ -40,7 +40,7 @@ public class VirtualClassController {
     @DeleteMapping(path = "")
     public ResponseEntity<Void> deleteVirtualClass(@RequestHeader HttpHeaders headers) throws VirtualClassNotFoundException {
         try {
-            String jwtToken = getToken(headers);
+            String jwtToken = jwtUtils.getToken(headers);
             String name = jwtUtils.extractName(jwtToken);
             if (jwtUtils.isExpired(jwtToken) || !virtualClassService.isTeacher(name)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -73,7 +73,7 @@ public class VirtualClassController {
     public ResponseEntity<Void> removeStudent(@RequestHeader HttpHeaders headers, @Valid @RequestBody RequestDTO request)
             throws VirtualClassNotFoundException, StudentNotFoundException {
         try {
-            String jwtToken = getToken(headers);
+            String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
             if (jwtUtils.isExpired(jwtToken) || !authName.equals(request.getName())) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
