@@ -1,18 +1,27 @@
 package pl.edu.agh.backend.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
-import pl.edu.agh.backend.Student;
-import pl.edu.agh.backend.VirtualClass;
+import pl.edu.agh.backend.models.Student;
+import pl.edu.agh.backend.models.VirtualClass;
 import pl.edu.agh.backend.exceptions.types.StudentAlreadyExistsException;
 import pl.edu.agh.backend.exceptions.types.StudentNotFoundException;
 import pl.edu.agh.backend.exceptions.types.VirtualClassAlreadyCreatedException;
 import pl.edu.agh.backend.exceptions.types.VirtualClassNotFoundException;
+import pl.edu.agh.backend.utils.JsonSchemaFactory;
+import pl.edu.agh.backend.utils.parsers.FormParser;
+import pl.edu.agh.backend.utils.validators.FormJsonValidator;
 
 import java.util.List;
 
 @Service
 public class VirtualClassService {
     private VirtualClass virtualClass = null;
+    private final FormJsonValidator formJsonValidator;
+
+    public VirtualClassService() {
+        this.formJsonValidator = new FormJsonValidator(JsonSchemaFactory.getSchema("form"));
+    }
 
     public void createVirtualClass(String className) throws VirtualClassAlreadyCreatedException {
         if (virtualClass != null) {
@@ -74,5 +83,26 @@ public class VirtualClassService {
             }
         }
         return false;
+    }
+
+    public boolean addForm(String authName, String json) {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+
+        if (!virtualClass.getClassName().equals(authName)) {
+            return false;
+        }
+
+        try {
+            if (!formJsonValidator.validate(json)) {
+                throw new IllegalArgumentException("Invalid json");
+            }
+            virtualClass.setForm(FormParser.parse(json));
+            return true;
+        } catch (JsonProcessingException e) {
+            return false;
+        }
+
     }
 }
