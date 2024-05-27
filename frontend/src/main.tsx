@@ -26,6 +26,10 @@ const router = createBrowserRouter([
     {
         path: "/class",
         element: <div>Class screen</div>
+    },
+    {
+        path: "/class/form",
+        element: <div>Creating form</div>
     }
 ]);
 
