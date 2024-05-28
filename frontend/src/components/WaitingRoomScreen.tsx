@@ -1,28 +1,34 @@
 import "./WaitingRoomScreen.css";
 
 import StudentComponent from "./studentComponent";
-import { getAccessCode, getStudents } from "../services/VirtualClassService";
-import { environment } from "../environments/environment";
+import {getAccessCode, getClassName, getStudents} from "../services/VirtualClassService";
+// import { environment } from "../environments/environment";
 
 import QRCode from "react-qr-code";
+import {useEffect, useState} from "react";
+import {environment} from "../environments/environment.tsx";
 
 function WaitingRoomScreen() {
-    let gameCode = "Trwa ładowanie..."
-    getAccessCode().then((response) => {
-        gameCode = response.data;
-    }).catch((err) => {
-        console.log(err);
-    });
-    let gameAddress = "http://localhost:3000/join";
-    let className = "...";
-    getAccessCode().then((response) => {
-        className = response.data;
-    }).catch((err) => {
-        console.log(err);
-    });
-    let studentsList: string[] = [];
-    getStudents().then((response) => {
-        studentsList = response.data;
+
+    const [gameCode, setGameCode] = useState('');
+    const [className, setClassName] = useState('');
+    const [studentList, setStudentList] = useState([]);
+    const gameAddress = environment.gameAddress;
+
+    useEffect(() => {
+        getAccessCode().then((response) => {
+            setGameCode(response.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+        getClassName().then((response) => {
+            setClassName(response.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+        getStudents().then((response) => {
+            setStudentList(response.data);
+        });
     });
 
     return(
@@ -30,7 +36,7 @@ function WaitingRoomScreen() {
             <div className="header">
                 <div className="qr-container">
                     <QRCode size={256} style={{ height: "22vh", maxWidth: "100%", width: "auto" }}
-            value={gameAddress}/>
+            value={gameAddress + "?code=" + gameCode}/>
                 </div>
                 <div className="game-address">
                     <p>Kod dostępu: <strong>{gameCode}</strong></p>
@@ -40,11 +46,11 @@ function WaitingRoomScreen() {
                 </div>
             </div>
             <div className="virtualClass">
-                {studentsList.length == 0 ? (
+                {studentList.length == 0 ? (
                     <h2>Oczekiwanie na graczy...</h2>
                 ) : (
                     <div className="students-container">
-                        {studentsList.map((student) => (
+                        {studentList.map((student) => (
                             <StudentComponent studentName={student}/>
                         ))}
                     </div>

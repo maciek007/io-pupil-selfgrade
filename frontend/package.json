@@ -12,14 +12,15 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@modular-forms/react": "^0.6.0",
     "@microsoft/eslint-formatter-sarif": "^3.1.0",
+    "@modular-forms/react": "^0.6.0",
     "@mui/material": "^5.15.18",
     "@preact/signals-react": "^1.0.1",
     "axios": "^1.6.8",
     "clsx": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-qr-code": "^2.0.13",
     "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
