@@ -1,9 +1,9 @@
 import "./LoginScreen.css"
 
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {joinClass} from "../services/LoginService.tsx";
-import {saveToken} from "../services/StorageService.tsx";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { joinClass } from "../services/LoginService.tsx";
+import { saveToken } from "../services/StorageService.tsx";
 
 function LoginScreen() {
     const navigate = useNavigate();
@@ -52,13 +52,13 @@ function LoginScreen() {
             <div>
                 <label>
                     Kod:
-                    <input value={code} type="text" onChange={e => setCode(e.target.value)}/>
+                    <input value={code} type="text" onChange={e => setCode(e.target.value)} />
                 </label>
                 <label>
                     Imię i nazwisko:
-                    <input value={name} type="text" onChange={e => setName(e.target.value)}/>
+                    <input value={name} type="text" onChange={e => setName(e.target.value)} />
                 </label>
-                <button onClick={handleJoinGame}>Dołącz do gry</button>
+                <button className="w-full" onClick={handleJoinGame}>Dołącz do gry</button>
             </div>
         </div>
     );

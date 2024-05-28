@@ -1,6 +1,6 @@
 import "./StartScreen.css"
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function StartScreen() {
     const navigate = useNavigate();
@@ -15,10 +15,10 @@ function StartScreen() {
 
     return (
         <div id="container">
-            <img src="../assets/logo.png" alt="Logo" className="logo"/>
+            <img src="../assets/logo.png" alt="Logo" className="logo" />
             <div>
-                <button onClick={handleCreateGame}>Utwórz nową grę</button>
-                <button onClick={handleJoinGame}>Dołącz do gry</button>
+                <button className="w-full" onClick={handleCreateGame}>Utwórz nową grę</button>
+                <button className="w-full" onClick={handleJoinGame}>Dołącz do gry</button>
             </div>
         </div>
     );

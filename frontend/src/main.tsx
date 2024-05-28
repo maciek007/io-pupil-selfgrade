@@ -9,6 +9,7 @@ import {
 import StartScreen from "./components/StartScreen.tsx";
 import VirtualClassCreator from "./components/VirtualClassCreator.tsx";
 import LoginScreen from "./components/LoginScreen.tsx";
+import FormCreation from "./components/FormCreation.tsx";
 
 const router = createBrowserRouter([
     {
@@ -17,11 +18,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/create",
-        element: <VirtualClassCreator/>
+        element: <VirtualClassCreator />
     },
     {
         path: "/join",
-        element: <LoginScreen/>
+        element: <LoginScreen />
     },
     {
         path: "/class",
@@ -29,12 +30,12 @@ const router = createBrowserRouter([
     },
     {
         path: "/class/form",
-        element: <div>Creating form</div>
+        element: <FormCreation />
     }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router}/>
-  </React.StrictMode>,
+    <React.StrictMode>
+        <RouterProvider router={router} />
+    </React.StrictMode>,
 )
