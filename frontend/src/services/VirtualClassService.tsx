@@ -24,3 +24,7 @@ export const getAccessCode = () => {
 export const getStudents = () => {
     return axios.get(environment.backEnd + "/class/students", axiosConfig);
 }
+
+export const getClassName = () => {
+    return axios.get(environment.backEnd + "/class/name", axiosConfig);
+}

@@ -44,6 +44,13 @@ public class VirtualClassService {
         return virtualClass.getAccessCode();
     }
 
+    public String getClassName() throws VirtualClassNotFoundException {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getClassName();
+    }
+
     public void joinClass(String name, String code)
             throws VirtualClassNotFoundException, StudentAlreadyExistsException {
         if (virtualClass == null || !virtualClass.getAccessCode().equals(code)) {

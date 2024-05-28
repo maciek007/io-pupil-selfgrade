@@ -1,14 +1,29 @@
 import "./WaitingRoomScreen.css";
 
 import StudentComponent from "./studentComponent";
+import { getAccessCode, getStudents } from "../services/VirtualClassService";
+import { environment } from "../environments/environment";
 
 import QRCode from "react-qr-code";
 
 function WaitingRoomScreen() {
-    let gameCode = "1234";
-    let gameAddress = "www.google.com";
-    let className = "3A";
-    let studentsList = ["Jan Kowalski", "Adam Nowak", "Anna Kowal", "Krzysztof Nowak", "Katarzyna Kowalska", "Piotr Nowak", "Jan Kowalski", "Adam Nowak", "Anna Kowal", "Krzysztof Nowak", "Katarzyna Kowalska"];
+    let gameCode = "Trwa ładowanie..."
+    getAccessCode().then((response) => {
+        gameCode = response.data;
+    }).catch((err) => {
+        console.log(err);
+    });
+    let gameAddress = "http://localhost:3000/join";
+    let className = "...";
+    getAccessCode().then((response) => {
+        className = response.data;
+    }).catch((err) => {
+        console.log(err);
+    });
+    let studentsList: string[] = [];
+    getStudents().then((response) => {
+        studentsList = response.data;
+    });
 
     return(
         <div className="wrapper">
