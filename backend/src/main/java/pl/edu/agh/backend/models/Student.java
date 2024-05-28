@@ -1,7 +1,6 @@
-package pl.edu.agh.backend;
+package pl.edu.agh.backend.models;
 
 import lombok.Getter;
-import pl.edu.agh.backend.models.Form;
 
 import java.util.HashMap;
 

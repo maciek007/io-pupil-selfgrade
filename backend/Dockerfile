@@ -1,8 +1,10 @@
 FROM amazoncorretto:21
-VOLUME /tmp
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+WORKDIR /app
+
+COPY ./backend/target/*.jar app.jar
+
+ENTRYPOINT ["java","-jar","app.jar"]
 
 
 # docker build -t spring-docker . - to build the image
