@@ -5,6 +5,8 @@ import {
 } from '@modular-forms/react';
 import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, InputError, TextAreaInput } from './formComponents';
 import { maxLength, minLength } from '@modular-forms/react';
+import {createForm} from "../services/FormService.tsx";
+import {useNavigate} from "react-router-dom";
 
 type FormCreation = {
     longQuestions: {
@@ -71,10 +73,20 @@ export default function FormCreation() {
         initialValues,
     });
 
+    const navigate = useNavigate();
+
+    const handleSubmit = (values: FormCreation) => {
+        createForm(values).then(() => {
+            navigate("/class");
+        }).catch(() => {
+            alert("Błąd przy tworzeniu formularza");
+        });
+    };
+
     return (
         <Form
             className="space-y-12 md:space-y-14 lg:space-y-16"
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => handleSubmit(values)}
         >
             <FormHeader of={FormCreation} heading="Tworzenie formularza" />
 
