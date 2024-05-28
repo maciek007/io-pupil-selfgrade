@@ -10,8 +10,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "minLength": 1,
-        "pattern": "^\\S+(\\s+\\S+){9,199}$"
+        "minLength": 1
       }
     },
     "shortQuestionFields": {
@@ -20,8 +19,7 @@
       "description": "Optional field for short answer",
       "items": {
         "type": "string",
-        "minLength": 1,
-        "pattern": "^\\S+(\\s+\\S+){1,9}$"
+        "minLength": 1
       }
     },
     "multiSelectionFields": {
@@ -90,7 +88,7 @@
     },
     "additionalProperties": false,
     "required": [
-      "longAnswerFields"
+      "longQuestionFields"
     ]
   }
 }
