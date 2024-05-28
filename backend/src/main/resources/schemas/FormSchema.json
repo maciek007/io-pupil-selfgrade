@@ -90,7 +90,7 @@
     },
     "additionalProperties": false,
     "required": [
-      "longAnswerField"
+      "longAnswerFields"
     ]
   }
 }
