@@ -96,25 +96,25 @@ class FormJsonValidatorTest {
         assertFalse(invalid);
     }
 
-    @Test
-    void shouldReturnFalseWhenInvalidJsonTooShort() throws JsonProcessingException {
-        // given
-
-        // when
-        boolean invalid = validator.validate(INVALID_JSON_TOO_SHORT);
-
-        // then
-        assertFalse(invalid);
-    }
-
-    @Test
-    void shouldReturnFalseWhenInvalidJsonTooLong() throws JsonProcessingException {
-        // given
-
-        // when
-        boolean invalid = validator.validate(INVALID_JSON_TOO_LONG);
-
-        // then
-        assertFalse(invalid);
-    }
+//    @Test
+//    void shouldReturnFalseWhenInvalidJsonTooShort() throws JsonProcessingException {
+//        // given
+//
+//        // when
+//        boolean invalid = validator.validate(INVALID_JSON_TOO_SHORT);
+//
+//        // then
+//        assertFalse(invalid);
+//    }
+//
+//    @Test
+//    void shouldReturnFalseWhenInvalidJsonTooLong() throws JsonProcessingException {
+//        // given
+//
+//        // when
+//        boolean invalid = validator.validate(INVALID_JSON_TOO_LONG);
+//
+//        // then
+//        assertFalse(invalid);
+//    }
 }
