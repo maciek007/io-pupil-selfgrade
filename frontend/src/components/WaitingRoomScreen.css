@@ -1,0 +1,72 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 100px);
+    height: 40%;
+    margin: 0;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.header p {
+    font-size: 2.2em;
+}
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25vh;
+    width: 25vh;
+    background-color: white;
+    border: none;
+    border-radius: 25px;
+}
+
+.game-address {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.class-name {
+    width: 25vh;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.virtualClass {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 75%;
+    /* background-color: white; */
+}
+
+.students-container {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 100px);
+    flex-wrap: wrap;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.student {
+    padding: 20px;
+    height: auto;
+}
