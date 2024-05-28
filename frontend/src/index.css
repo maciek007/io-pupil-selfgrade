@@ -1,3 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Disable-transitions */
+.disable-transitions,
+.disable-transitions * {
+  transition: none !important;
+}
+
+/* Reset appearance */
+[type='date'] {
+  @apply flex appearance-none items-center justify-start;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -17,6 +33,7 @@
 }
 
 a {
+
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -43,10 +60,9 @@ h1 {
 button {
   border-radius: 10px;
   border: none;
-  width: 100%;
   padding: 0.6em 1.2em;
   font-size: 1em;
-  background-color: #A8CD9F;
+  background-color: #a8cd9f;
   color: #496989;
   cursor: pointer;
   transition: background-color 0.25s;

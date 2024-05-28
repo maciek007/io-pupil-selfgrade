@@ -33,11 +33,11 @@ function VirtualClassCreator() {
 
     return (
         <div>
-            <img src="../assets/logo.png" alt="Logo" className="logo"/>
+            <img src="../assets/logo.png" alt="Logo" className="logo" />
             <div className="controls">
-                <input type="text" value={name} onChange={e => setName(e.target.value)}/>
-                <button onClick={handleFormChange}>Wybierz formularz</button>
-                <button onClick={handleCreateGame}>Utwórz nową grę</button>
+                <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                <button className="w-full" onClick={handleFormChange}>Wybierz formularz</button>
+                <button className="w-full" onClick={handleCreateGame}>Utwórz nową grę</button>
             </div>
         </div>
     );
