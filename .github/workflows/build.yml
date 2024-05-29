@@ -27,6 +27,6 @@ jobs:
               
             - name: Build the Docker images
               run: |
-                docker build -t spring-docker ./CI
+                docker build . -t spring-docker -f ./CI/Dockerfile
                 docker build -t react-docker ./frontend
 
