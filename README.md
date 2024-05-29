@@ -4,7 +4,7 @@
 
 Uruchamiamy obie aplikacje jednocześnie za pomocą `compose.yaml`. 
 
-Będąc w głównym folderze wpisujemy `docker-compose up --build` co spowoduje zbudowanie obu obrazu i uruchomienie ich jako kontenerów.
+Będąc w głównym folderze wpisujemy `docker-compose up --build` co spowoduje zbudowanie obu obrazów i uruchomienie ich jako kontenerów.
 
 ## Frontend 
 - Wersja bez dockera:
