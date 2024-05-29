@@ -24,13 +24,9 @@ jobs:
               
             - name: Check Maven
               run: ls ./backend/target
+            - name: LS
+              name: ls .
               
-            - name: Test 
-              run: ls . 
-              
-            - name: Test2 
-              run: ls ./../../
-            
             - name: Build the Docker images
               run: |
                 docker build -t spring-docker ./.github/workflows/Backend
