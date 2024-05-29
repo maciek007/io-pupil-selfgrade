@@ -27,6 +27,6 @@ jobs:
             
             - name: Build the Docker images
               run: |
-                docker build . -t spring-docker -f ./backend/Dockerfile
+                docker build . -t spring-docker -f ./.github/workflows/Backend
                 docker build -t react-docker ./frontend
 
