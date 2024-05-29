@@ -2,7 +2,7 @@ FROM amazoncorretto:21
 
 WORKDIR /app
 
-COPY ./../../io/backend/target/*.jar app.jar
+COPY ./backend/target/*.jar app.jar
 
 ENTRYPOINT ["java","-jar","app.jar"]
 
