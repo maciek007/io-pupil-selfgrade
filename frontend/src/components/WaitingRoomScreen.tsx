@@ -51,7 +51,7 @@ function WaitingRoomScreen() {
                 ) : (
                     <div className="students-container">
                         {studentList.map((student, index) => (
-                            <StudentComponent key={index} studentName={String(student)} />
+                            <StudentComponent key={index} studentName={student} />
                         ))}
                     </div>
                 )}
