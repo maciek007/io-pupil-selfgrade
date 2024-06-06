@@ -57,6 +57,11 @@ public class VirtualClassController {
         return ResponseEntity.ok(virtualClassService.getAccessCode());
     }
 
+    @GetMapping(path = "/name")
+    public ResponseEntity<String> getClassName() throws VirtualClassNotFoundException {
+        return ResponseEntity.ok(virtualClassService.getClassName());
+    }
+
     @PostMapping(path = "/join")
     public ResponseEntity<String> joinVirtualClass(@Valid @RequestBody RequestDTO request)
             throws VirtualClassNotFoundException, StudentAlreadyExistsException {

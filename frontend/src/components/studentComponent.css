@@ -1,0 +1,18 @@
+.student {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: max-content;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: aliceblue;
+}
+
+.student-name {
+    font-size: 1.5em;
+}
