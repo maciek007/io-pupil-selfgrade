@@ -51,6 +51,13 @@ public class VirtualClassService {
         return virtualClass.getClassName();
     }
 
+    public String getSecurityCode() throws VirtualClassNotFoundException {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getSecurityCode();
+    }
+
     public void joinClass(String name, String code)
             throws VirtualClassNotFoundException, StudentAlreadyExistsException {
         if (virtualClass == null || !virtualClass.getAccessCode().equals(code)) {
@@ -79,18 +86,18 @@ public class VirtualClassService {
         return virtualClass.getStudents().keySet().stream().toList();
     }
 
-    public boolean isTeacher(String name) {
-        return name.equals(virtualClass.getClassName());
+    public boolean notTeacher(String securityCode) {
+        return !securityCode.equals(virtualClass.getSecurityCode());
     }
 
-    public boolean isStudent(String name) {
-        for (String studentName : virtualClass.getStudents().keySet()) {
-            if (studentName.equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean isStudent(String name) {
+//        for (String studentName : virtualClass.getStudents().keySet()) {
+//            if (studentName.equals(name)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public boolean addForm(String authName, String json) {
         if (virtualClass == null) {
