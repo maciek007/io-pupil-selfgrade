@@ -10,12 +10,19 @@ import java.util.List;
 
 public final class JsonParser {
     public static Parseable parseJson(String json, String value) throws IllegalArgumentException, JsonProcessingException {
-        switch (value.toLowerCase()) {
-            case "form":
-                return FormParser.parse(json);
-            default:
-                throw new IllegalArgumentException("Unknown value: " + value);
+        return switch (value.toLowerCase()) {
+            case "form" -> FormParser.parse(json);
+            case "answer" -> AnswerParser.parse(json);
+            default -> throw new IllegalArgumentException("Unknown value: " + value);
+        };
+    }
+
+    public static String getField(JsonNode json, String value) {
+        if (json.findValue(value) == null) {
+            return null;
         }
+
+        return json.findValue(value).asText();
     }
 
     public static List<String> getArrayField(JsonNode json, String value) {

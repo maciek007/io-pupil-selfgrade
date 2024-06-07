@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Form Answers Schema",
+  "title": "Form Questions Schema",
   "type": "object",
-  "description": "Schema for form answers",
+  "description": "Schema for form questions",
   "properties": {
     "longQuestionFields": {
       "type": "array",
