@@ -90,14 +90,14 @@ public class VirtualClassService {
         return !securityCode.equals(virtualClass.getSecurityCode());
     }
 
-//    public boolean isStudent(String name) {
-//        for (String studentName : virtualClass.getStudents().keySet()) {
-//            if (studentName.equals(name)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean notStudent(String name) {
+        for (String studentName : virtualClass.getStudents().keySet()) {
+            if (studentName.equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public boolean addForm(String authName, String json) {
         if (virtualClass == null) {
