@@ -19,4 +19,5 @@ public record Answer (String question, List<String> answers) implements Parseabl
             throw new IllegalArgumentException("Answers field cannot be empty");
         }
     }
+
 }

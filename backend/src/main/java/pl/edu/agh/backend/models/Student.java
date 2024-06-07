@@ -2,31 +2,34 @@ package pl.edu.agh.backend.models;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Getter
 public class Student {
     private final String name;
-    private final HashMap<String, Form> forms;
+    private final HashMap<String, List<Answer>> answers;
 
     public Student(String name) {
         this.name = name;
-        forms = new HashMap<>();
+        answers = new HashMap<>();
     }
 
-    public boolean addForm(String name, Form form) {
-        if (!forms.containsKey(name)) {
-            forms.put(name, form);
+    public boolean addAnswer(String answerer, Answer answer) {
+        if (!answers.containsKey(answerer)) {
+            answers.put(answerer, new ArrayList<>());
+        }
+        List<Answer> list = answers.get(answerer);
+
+        if (!isAlreadyAnswered(list, answer)) {
+            list.add(answer);
             return true;
         }
         return false;
     }
 
-    public void removeForm(String name) {
-        forms.remove(name);
-    }
-
-    public void addForms(HashMap<String, Form> forms) {
-        this.forms.putAll(forms);
+    private boolean isAlreadyAnswered(List<Answer> answerList, Answer answer) {
+        return answerList.stream().anyMatch(a -> a.question().equals(answer.question()));
     }
 }
