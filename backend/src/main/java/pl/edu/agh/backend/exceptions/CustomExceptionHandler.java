@@ -89,4 +89,22 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDetails, HttpStatus.LOCKED);
     }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            GameCannotStartWithoutMinimumNumberOfStudents.class,
+    })
+    public final ResponseEntity<ErrorDetails> handleBadRequestException(Exception ex, WebRequest request) {
+        Map<String, String> messages = new HashMap<>();
+        messages.put("message", ex.getMessage());
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                messages,
+                request.getDescription(false),
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value()
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

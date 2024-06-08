@@ -89,6 +89,13 @@ public class VirtualClassService {
         return virtualClass.getStudents().keySet().stream().toList();
     }
 
+    public int getNumberOfStudents() {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getStudents().size();
+    }
+
     public boolean notTeacher(String securityCode) {
         return !securityCode.equals(virtualClass.getSecurityCode());
     }
