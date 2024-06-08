@@ -55,6 +55,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             VirtualClassAlreadyCreatedException.class,
             StudentAlreadyExistsException.class,
             FormHasNotBeenCreatedException.class,
+            GameHasNotBeenStartedException.class
+
     })
     public final ResponseEntity<ErrorDetails> handleConflictException(Exception ex, WebRequest request) {
         Map<String, String> messages = new HashMap<>();
