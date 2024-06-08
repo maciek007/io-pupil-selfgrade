@@ -1,6 +1,6 @@
-import {getToken} from "./StorageService.tsx";
+import { getToken } from "./StorageService.tsx";
 import axios from "axios";
-import {environment} from "../environments/environment.tsx";
+import { environment } from "../environments/environment.tsx";
 
 export const createForm = (form: any) => {
     const axiosConfig = {
@@ -9,6 +9,7 @@ export const createForm = (form: any) => {
             'Authorization': 'Bearer ' + getToken()
         }
     };
+    //TODO: add the rest of the fields
     const data = {
         longQuestionFields: form.longQuestions.questions,
         shortQuestionFields: form.shortQuestions.questions
