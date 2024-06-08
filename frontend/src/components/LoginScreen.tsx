@@ -32,6 +32,8 @@ function LoginScreen() {
                 alert("Użytkownik z daną nazwą jest już w klasie");
             } else if (e.response.status == 404) {
                 alert("Gra z podanym kodem nie istnieje");
+            } else if (e.response.status == 423) {
+                alert("Gra z podanym kodem jest już rozpoczęta");
             } else {
                 alert("Błąd przy dołącza");
             }
