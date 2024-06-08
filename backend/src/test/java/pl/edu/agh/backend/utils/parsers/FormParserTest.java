@@ -17,7 +17,6 @@ class FormParserTest {
         int shortQuestionsExpectedSize = 2;
         int multiSelectionsExpectedSize = 2;
         int singleSelectionsExpectedSize = 2;
-        int radioButtonsExpectedSize = 2;
         int checkboxesExpectedSize = 2;
 
         int firstMultiSelectionOptionsSize = 3;
@@ -32,7 +31,6 @@ class FormParserTest {
         assertEquals(shortQuestionsExpectedSize, result.shortQuestions().size());
         assertEquals(multiSelectionsExpectedSize, result.multiSelections().size());
         assertEquals(singleSelectionsExpectedSize, result.singleSelections().size());
-        assertEquals(radioButtonsExpectedSize, result.radioButtons().size());
         assertEquals(checkboxesExpectedSize, result.checkboxes().size());
 
         assertEquals(firstMultiSelectionOptionsSize, result.multiSelections().get(0).size());

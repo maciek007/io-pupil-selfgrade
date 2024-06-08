@@ -31,6 +31,10 @@
         "description": "Multi selection field",
         "additionalProperties": false,
         "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1
+          },
           "options": {
             "type": "array",
             "description": "Options for multi selection",
@@ -41,7 +45,11 @@
               "pattern": "^\\S+(\\s+\\S+)*$"
             }
           }
-        }
+        },
+        "required": [
+          "question",
+          "options"
+        ]
       }
     },
     "singleSelectionFields": {
@@ -53,6 +61,10 @@
         "description": "Multi selection field",
         "additionalProperties": false,
         "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1
+          },
           "options": {
             "type": "array",
             "description": "Options for multi selection",
@@ -63,17 +75,11 @@
               "pattern": "^\\S+(\\s+\\S+)*$"
             }
           }
-        }
-      }
-    },
-    "radioButtonFields": {
-      "type": "array",
-      "description": "Optional radio buttons",
-      "minItems": 1,
-      "items": {
-        "type": "string",
-        "minLength": 1,
-        "pattern": "^\\S+(\\s+\\S+)*$"
+        },
+        "required": [
+          "question",
+          "options"
+        ]
       }
     },
     "checkboxFields": {
