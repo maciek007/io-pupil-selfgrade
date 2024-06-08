@@ -16,17 +16,17 @@ class FormJsonValidatorTest {
 
     private static final String INVALID_JSON_WITH_OPTIONAL_EMPTY = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"], \"shortQuestionFields\": []}";
     private static final String INVALID_JSON = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"], \"shortQuestionFields\": [123]}";
-    private static final String INVALID_JSON_TOO_SHORT = "{\"longQuestionFields\": [\"too short\"]}";
-    private static final String INVALID_JSON_TOO_LONG = "{\"longQuestionFields\": " + "[\"" + " too long ".repeat(201) + "\"]" + "}";
+//    private static final String INVALID_JSON_TOO_SHORT = "{\"longQuestionFields\": [\"too short\"]}";
+//    private static final String INVALID_JSON_TOO_LONG = "{\"longQuestionFields\": " + "[\"" + " too long ".repeat(201) + "\"]" + "}";
 
     private static final String VALID_JSON = "{\"longQuestionFields\":[\"Long question is correct. Long question is correct. Long question is correct.\",\"Long question is correct. Long question is correct. Long question is correct.\"],\"shortQuestionFields\":[\"shortQuestion1 shortQuestion1\",\"shortQuestion2 shortQuestion2\"],\"multiSelectionFields\":[{\"options\":[\"option1\",\"option2\", \"options3\"]},{\"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"options\":[\"option5\",\"option6\"]},{\"options\":[\"option7\",\"option8\"]}],\"radioButtonFields\":[\"radioButton1\",\"radioButton2\"],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
 
 
-    private static FormJsonValidator validator;
+    private static JsonValidator validator;
 
     @BeforeAll
     static void setUp() {
-        validator = new FormJsonValidator(JsonSchemaFactory.getSchema("form"));
+        validator = new JsonValidator(JsonSchemaFactory.getSchema("form"));
     }
 
     @Test

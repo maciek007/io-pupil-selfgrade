@@ -10,17 +10,17 @@ import pl.edu.agh.backend.exceptions.types.VirtualClassAlreadyCreatedException;
 import pl.edu.agh.backend.exceptions.types.VirtualClassNotFoundException;
 import pl.edu.agh.backend.utils.JsonSchemaFactory;
 import pl.edu.agh.backend.utils.parsers.FormParser;
-import pl.edu.agh.backend.utils.validators.FormJsonValidator;
+import pl.edu.agh.backend.utils.validators.JsonValidator;
 
 import java.util.List;
 
 @Service
 public class VirtualClassService {
     private VirtualClass virtualClass = null;
-    private final FormJsonValidator formJsonValidator;
+    private final JsonValidator formJsonValidator;
 
     public VirtualClassService() {
-        this.formJsonValidator = new FormJsonValidator(JsonSchemaFactory.getSchema("form"));
+        this.formJsonValidator = new JsonValidator(JsonSchemaFactory.getSchema("form"));
     }
 
     public void createVirtualClass(String className) throws VirtualClassAlreadyCreatedException {
