@@ -31,7 +31,7 @@ public class VirtualClassController {
     public ResponseEntity<String> createVirtualClass(@Valid @RequestBody RequestDTO request) throws VirtualClassAlreadyCreatedException {
         String name = request.getName();
         virtualClassService.createVirtualClass(name);
-        String access = jwtUtils.createToken(name);
+        String access = jwtUtils.createToken(virtualClassService.getSecurityCode());
         JSONObject json = new JSONObject();
         json.put("access", access);
         return new ResponseEntity<>(json.toString(), HttpStatus.CREATED);
@@ -42,7 +42,7 @@ public class VirtualClassController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String name = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || !virtualClassService.isTeacher(name)) {
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(name)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             virtualClassService.deleteVirtualClass();
@@ -93,25 +93,14 @@ public class VirtualClassController {
     @GetMapping(path = "/students")
     public ResponseEntity<List<String>> getStudents(@RequestHeader HttpHeaders headers) throws VirtualClassNotFoundException {
         try {
-            String jwtToken = getToken(headers);
+            String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) && !virtualClassService.isTeacher(authName) && !virtualClassService.isStudent(authName)) {
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             return ResponseEntity.ok(virtualClassService.getStudents());
         } catch (RequestWithoutAuthorizationException e) {
             return ResponseEntity.badRequest().build();
         }
-    }
-
-    private String getToken(HttpHeaders headers) throws RequestWithoutAuthorizationException {
-        if (headers == null) {
-            throw new RequestWithoutAuthorizationException();
-        }
-        String authHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RequestWithoutAuthorizationException();
-        }
-        return authHeader.substring("Bearer ".length());
     }
 }

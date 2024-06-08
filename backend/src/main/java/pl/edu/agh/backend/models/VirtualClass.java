@@ -3,14 +3,15 @@ package pl.edu.agh.backend.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Random;
+
+import java.util.*;
 
 @Getter
 public class VirtualClass {
     private final String className;
     private final HashMap<String, Student> students;
     private final String accessCode;
+    private final String securityCode;
     @Setter
     private Form form;
 
@@ -18,6 +19,7 @@ public class VirtualClass {
         this.className = className;
         students = new HashMap<>();
         accessCode = generateAccessCode();
+        securityCode = shuffle(className + accessCode);
     }
 
     private String generateAccessCode() {
@@ -35,5 +37,11 @@ public class VirtualClass {
 
     public boolean removeStudent(String name) {
         return students.remove(name) != null;
+    }
+
+    private String shuffle(String text) {
+        List<String> characters = Arrays.asList(text.split(""));
+        Collections.shuffle(characters);
+        return String.join("", characters);
     }
 }

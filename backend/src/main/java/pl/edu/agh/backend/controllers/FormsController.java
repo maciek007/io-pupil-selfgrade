@@ -26,10 +26,31 @@ public class FormsController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || !virtualClassService.addForm(authName, json)) {
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
-            return ResponseEntity.ok().build();
+            if (virtualClassService.addForm(json)) {
+                return ResponseEntity.ok().build();
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping(path = "/answer/{name}")
+    public ResponseEntity<Void> answerForm(@PathVariable String name, @RequestHeader HttpHeaders headers, @RequestBody String json) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            if (virtualClassService.addAnswer(name, authName, json)) {
+                return ResponseEntity.ok().build();
+            }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
         } catch (RequestWithoutAuthorizationException e) {
             return ResponseEntity.badRequest().build();
         }
