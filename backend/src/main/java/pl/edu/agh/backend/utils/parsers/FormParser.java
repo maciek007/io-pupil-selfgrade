@@ -17,7 +17,6 @@ public class FormParser {
                 .shortQuestions(parseSimpleArrayFields(jsonNode, "shortQuestionFields"))
                 .multiSelections(parseComplexListFields(jsonNode, "multiSelectionFields"))
                 .singleSelections(parseComplexListFields(jsonNode, "singleSelectionFields"))
-                .radioButtons(parseSimpleArrayFields(jsonNode, "radioButtonFields"))
                 .checkboxes(parseSimpleArrayFields(jsonNode, "checkboxFields"))
                 .build();
     }

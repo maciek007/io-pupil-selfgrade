@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FormJsonValidatorTest {
     private static final String VALID_JSON_WITHOUT_OPTIONAL = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"]}";
     private static final String VALID_JSON_WITH_OPTIONAL = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"], \"shortQuestionFields\": [\"Short answer\"]}";
-    private static final String VALID_JSON_WITH_MULTI_SELECTION_FIELD = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"], \"multiSelectionFields\": [{\"options\": [\"Option 1\", \"Option 2\", \"Option 3\"]}, {\"options\": [\"Option 1\", \"Option 2\", \"Option 3\"]}]}";
+    private static final String VALID_JSON_WITH_MULTI_SELECTION_FIELD = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"], \"multiSelectionFields\": [{\"question\":\"question1\",\"options\": [\"Option 1\", \"Option 2\", \"Option 3\"]}, {\"question\":\"question2\",\"options\": [\"Option 1\", \"Option 2\", \"Option 3\"]}]}";
 
 
     private static final String INVALID_JSON_WITH_OPTIONAL_EMPTY = "{\"longQuestionFields\": [\"Long question is correct. Long question is correct. Long question is correct.\"], \"shortQuestionFields\": []}";
@@ -19,7 +19,7 @@ class FormJsonValidatorTest {
 //    private static final String INVALID_JSON_TOO_SHORT = "{\"longQuestionFields\": [\"too short\"]}";
 //    private static final String INVALID_JSON_TOO_LONG = "{\"longQuestionFields\": " + "[\"" + " too long ".repeat(201) + "\"]" + "}";
 
-    private static final String VALID_JSON = "{\"longQuestionFields\":[\"Long question is correct. Long question is correct. Long question is correct.\",\"Long question is correct. Long question is correct. Long question is correct.\"],\"shortQuestionFields\":[\"shortQuestion1 shortQuestion1\",\"shortQuestion2 shortQuestion2\"],\"multiSelectionFields\":[{\"options\":[\"option1\",\"option2\", \"options3\"]},{\"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"options\":[\"option5\",\"option6\"]},{\"options\":[\"option7\",\"option8\"]}],\"radioButtonFields\":[\"radioButton1\",\"radioButton2\"],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
+    private static final String VALID_JSON = "{\"longQuestionFields\":[\"Long question is correct. Long question is correct. Long question is correct.\",\"Long question is correct. Long question is correct. Long question is correct.\"],\"shortQuestionFields\":[\"shortQuestion1 shortQuestion1\",\"shortQuestion2 shortQuestion2\"],\"multiSelectionFields\":[{\"question\":\"question1\", \"options\":[\"option1\",\"option2\", \"options3\"]},{\"question\":\"question2\",\"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"question\":\"question1\",\"options\":[\"option5\",\"option6\"]},{\"question\":\"question2\",\"options\":[\"option7\",\"option8\"]}],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
 
 
     private static JsonValidator validator;
