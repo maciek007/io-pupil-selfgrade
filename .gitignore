@@ -1,0 +1,71 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+/frontend/yarn.lock
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+###
+
+/backend/HELP.md
+/backend/target/
+!/backend/.mvn/wrapper/maven-wrapper.jar
+!/backend/**/src/main/**/target/
+!/backend/**/src/test/**/target/
+
+### STS ###
+/bakend/.apt_generated
+/bakend/.classpath
+/bakend/.factorypath
+/bakend/.project
+/backend/.settings
+/backend/.springBeans
+/backend/.sts4-cache
+
+### IntelliJ IDEA ###
+/bakend/.idea
+/bakend/*.iws
+/bakend/*.iml
+/bakend/*.ipr
+
+### NetBeans ###
+/bakend/nbproject/private/
+/bakend/nbbuild/
+/bakend/dist/
+/bakend/nbdist/
+/bakend/.nb-gradle/
+/bakend/build/
+!/bakend/**/src/main/**/build/
+!/bakend/**/src/test/**/build/
+
+### VS Code ###
+/bakend/.vscode/

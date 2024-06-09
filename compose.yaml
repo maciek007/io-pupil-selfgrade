@@ -1,18 +1,10 @@
-version: '3.8'
-
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: spring-docker
+    image: spring-docker
     ports:
-      - '8080:8080'
+      - '8080'
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: react-docker
+    image: react-docker
     ports:
       - '3000:3000'
