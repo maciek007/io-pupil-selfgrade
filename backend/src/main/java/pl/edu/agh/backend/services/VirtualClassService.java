@@ -14,6 +14,7 @@ import pl.edu.agh.backend.utils.parsers.AnswerParser;
 import pl.edu.agh.backend.utils.parsers.FormParser;
 import pl.edu.agh.backend.utils.validators.JsonValidator;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -137,5 +138,13 @@ public class VirtualClassService {
         } catch (JsonProcessingException e) {
             return false;
         }
+    }
+
+    public List<Answer> getAnswers(String name) {
+        Student student = virtualClass.getStudents().get(name);
+        if (student == null) {
+            return new LinkedList<>();
+        }
+        return student.getAnswers();
     }
 }

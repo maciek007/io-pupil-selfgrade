@@ -5,9 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.exceptions.types.RequestWithoutAuthorizationException;
+import pl.edu.agh.backend.models.Answer;
 import pl.edu.agh.backend.services.VirtualClassService;
 import pl.edu.agh.backend.utils.API_PATH;
 import pl.edu.agh.backend.utils.jwt.JwtUtils;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -50,6 +53,21 @@ public class FormsController {
                 return ResponseEntity.ok().build();
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/answer/{name}")
+    public ResponseEntity<List<Answer>> getAnswers(@PathVariable String name, @RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            return ResponseEntity.ok(virtualClassService.getAnswers(name));
 
         } catch (RequestWithoutAuthorizationException e) {
             return ResponseEntity.badRequest().build();
