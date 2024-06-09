@@ -1,8 +1,9 @@
 import {getToken} from "./StorageService.tsx";
 import axios from "axios";
 import {environment} from "../environments/environment.tsx";
+import {FormCreationData} from "../components/FormCreation.tsx";
 
-export const createForm = (form: any) => {
+export const createForm = (form: FormCreationData) => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',

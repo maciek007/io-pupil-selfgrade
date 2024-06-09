@@ -8,7 +8,7 @@ import { maxLength, minLength } from '@modular-forms/react';
 import {createForm} from "../services/FormService.tsx";
 import {useNavigate} from "react-router-dom";
 
-type FormCreation = {
+
     longQuestions: {
         label: string;
         questions: string[];
@@ -69,13 +69,13 @@ const MIN_REQUIRED_QUESTIONS = 1;
 
 export default function FormCreation() {
     // Create nested form
-    const [FormCreation, { Form, Field, FieldArray }] = useForm<FormCreation>({
+    const [FormCreation, { Form, Field, FieldArray }] = useForm<FormCreationData>({
         initialValues,
     });
 
     const navigate = useNavigate();
 
-    const handleSubmit = (values: FormCreation) => {
+    const handleSubmit = (values: FormCreationData) => {
         createForm(values).then(() => {
             navigate("/class");
         }).catch(() => {
