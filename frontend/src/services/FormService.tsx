@@ -9,10 +9,13 @@ export const createForm = (form: any) => {
             'Authorization': 'Bearer ' + getToken()
         }
     };
-    //TODO: add the rest of the fields
+
     const data = {
         longQuestionFields: form.longQuestions.questions,
-        shortQuestionFields: form.shortQuestions.questions
+        shortQuestionFields: form.shortQuestions.questions,
+        multiSelectionFields: form.multipleSelectionQuestions.questions,
+        singleSelectionFields: form.singleSelectionQuestions.questions,
+        checkboxFields: form.checkboxQuestions.questions,
     };
     return axios.post(environment.backEnd + "/form", data, axiosConfig);
 }
