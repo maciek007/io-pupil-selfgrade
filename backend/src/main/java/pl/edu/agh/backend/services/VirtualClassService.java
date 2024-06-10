@@ -2,25 +2,28 @@ package pl.edu.agh.backend.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.backend.exceptions.types.*;
+import pl.edu.agh.backend.models.Answer;
+import pl.edu.agh.backend.models.Form;
 import pl.edu.agh.backend.models.Student;
 import pl.edu.agh.backend.models.VirtualClass;
-import pl.edu.agh.backend.exceptions.types.StudentAlreadyExistsException;
-import pl.edu.agh.backend.exceptions.types.StudentNotFoundException;
-import pl.edu.agh.backend.exceptions.types.VirtualClassAlreadyCreatedException;
-import pl.edu.agh.backend.exceptions.types.VirtualClassNotFoundException;
 import pl.edu.agh.backend.utils.JsonSchemaFactory;
+import pl.edu.agh.backend.utils.parsers.AnswerParser;
 import pl.edu.agh.backend.utils.parsers.FormParser;
-import pl.edu.agh.backend.utils.validators.FormJsonValidator;
+import pl.edu.agh.backend.utils.validators.JsonValidator;
 
 import java.util.List;
 
 @Service
 public class VirtualClassService {
+    public static boolean isAccessible = true;
+    private final JsonValidator formJsonValidator;
+    private final JsonValidator answerJsonValidator;
     private VirtualClass virtualClass = null;
-    private final FormJsonValidator formJsonValidator;
 
     public VirtualClassService() {
-        this.formJsonValidator = new FormJsonValidator(JsonSchemaFactory.getSchema("form"));
+        this.formJsonValidator = new JsonValidator(JsonSchemaFactory.getSchema("form"));
+        this.answerJsonValidator = new JsonValidator(JsonSchemaFactory.getSchema("answer"));
     }
 
     public void createVirtualClass(String className) throws VirtualClassAlreadyCreatedException {
@@ -42,6 +45,20 @@ public class VirtualClassService {
             throw new VirtualClassNotFoundException();
         }
         return virtualClass.getAccessCode();
+    }
+
+    public String getClassName() throws VirtualClassNotFoundException {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getClassName();
+    }
+
+    public String getSecurityCode() throws VirtualClassNotFoundException {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getSecurityCode();
     }
 
     public void joinClass(String name, String code)
@@ -72,26 +89,29 @@ public class VirtualClassService {
         return virtualClass.getStudents().keySet().stream().toList();
     }
 
-    public boolean isTeacher(String name) {
-        return name.equals(virtualClass.getClassName());
-    }
-
-    public boolean isStudent(String name) {
-        for (String studentName : virtualClass.getStudents().keySet()) {
-            if (studentName.equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean addForm(String authName, String json) {
+    public int getNumberOfStudents() {
         if (virtualClass == null) {
             throw new VirtualClassNotFoundException();
         }
+        return virtualClass.getStudents().size();
+    }
 
-        if (!virtualClass.getClassName().equals(authName)) {
-            return false;
+    public boolean notTeacher(String securityCode) {
+        return !securityCode.equals(virtualClass.getSecurityCode());
+    }
+
+    public boolean notStudent(String name) {
+        for (String studentName : virtualClass.getStudents().keySet()) {
+            if (studentName.equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean addForm(String json) {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
         }
 
         try {
@@ -104,5 +124,31 @@ public class VirtualClassService {
             return false;
         }
 
+    }
+
+    public Form getForm() {
+        if (virtualClass == null) {
+            throw new FormHasNotBeenCreatedException();
+        }
+        return virtualClass.getForm();
+    }
+
+    public boolean addAnswer(String name, String answerer, String answerJson) {
+        if (name.equals(answerer)) {
+            return false;
+        }
+        Student student = virtualClass.getStudents().get(name);
+        if (student == null) {
+            return false;
+        }
+        try {
+            if (!answerJsonValidator.validate(answerJson)) {
+                throw new IllegalArgumentException("Invalid json");
+            }
+            Answer answer = AnswerParser.parse(answerJson);
+            return student.addAnswer(answerer, answer);
+        } catch (JsonProcessingException e) {
+            return false;
+        }
     }
 }

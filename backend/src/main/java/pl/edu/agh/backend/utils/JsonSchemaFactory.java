@@ -9,6 +9,7 @@ public final class JsonSchemaFactory {
     public static JsonSchema getSchema(String schemaName) {
         return switch (schemaName) {
             case "form" -> getFormSchema();
+            case "answer" -> getAnswerSchema();
             default -> null;
         };
     }
@@ -16,5 +17,10 @@ public final class JsonSchemaFactory {
     private static JsonSchema getFormSchema() {
         return com.networknt.schema.JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4)
                 .getSchema(JsonSchemaFactory.class.getResourceAsStream(SCHEMAS_PATH + "FormSchema.json"));
+    }
+
+    private static JsonSchema getAnswerSchema() {
+        return com.networknt.schema.JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4)
+                .getSchema(JsonSchemaFactory.class.getResourceAsStream(SCHEMAS_PATH + "AnswerSchema.json"));
     }
 }

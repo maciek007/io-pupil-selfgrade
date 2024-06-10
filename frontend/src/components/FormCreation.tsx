@@ -107,9 +107,6 @@ export default function FormCreation() {
                     </div>
                     <div>
                         <FieldArray name={`longQuestions.questions`}
-                            validate={[maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`),
-                            minLength(MIN_REQUIRED_QUESTIONS, `Minimalna liczba pytań to ${MIN_REQUIRED_QUESTIONS}`)
-                            ]}
                         >
                             {(fieldArray) => (
                                 <div className="space-y-5 px-6">
