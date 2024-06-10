@@ -14,7 +14,7 @@ public class GameService {
     }
 
 
-    public List<FillableForm> getFromsForStudent(String studentName) {
+    public List<FillableForm> getFormsForStudent(String studentName) {
         return formsService.generateForms().get(studentName);
     }
 

@@ -48,6 +48,6 @@ public class GameController {
         }
 
 
-        return ResponseEntity.ok(gameService.getFromsForStudent(name));
+        return ResponseEntity.ok(gameService.getFormsForStudent(name));
     }
 }
