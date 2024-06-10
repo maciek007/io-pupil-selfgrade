@@ -5,8 +5,8 @@ import {
 } from '@modular-forms/react';
 import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, InputError, TextAreaInput } from './formComponents';
 import { maxLength, minLength } from '@modular-forms/react';
-import {createForm} from "../services/FormService.tsx";
-import {useNavigate} from "react-router-dom";
+import { createForm } from "../services/FormService.tsx";
+import { useNavigate } from "react-router-dom";
 
 type FormCreation = {
     longQuestions: {
@@ -106,9 +106,6 @@ export default function FormCreation() {
                     </div>
                     <div>
                         <FieldArray name={`longQuestions.questions`}
-                            validate={[maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`),
-                            minLength(MIN_REQUIRED_QUESTIONS, `Minimalna liczba pytań to ${MIN_REQUIRED_QUESTIONS}`)
-                            ]}
                         >
                             {(fieldArray) => (
                                 <div className="space-y-5 px-6">
