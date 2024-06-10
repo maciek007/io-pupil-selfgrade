@@ -16,3 +16,6 @@ export const createForm = (form: any) => {
     };
     return axios.post(environment.backEnd + "/form", data, axiosConfig);
 }
+export const handleFormImport = () => {
+    console.log("Importing form");
+};
