@@ -1,13 +1,17 @@
 package pl.edu.agh.backend.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.backend.exceptions.types.GameCannotStartWithoutMinimumNumberOfStudents;
 import pl.edu.agh.backend.exceptions.types.GameHasNotBeenStartedException;
+import pl.edu.agh.backend.exceptions.types.RequestWithoutAuthorizationException;
 import pl.edu.agh.backend.models.FillableForm;
 import pl.edu.agh.backend.services.GameService;
 import pl.edu.agh.backend.services.VirtualClassService;
 import pl.edu.agh.backend.utils.API_PATH;
+import pl.edu.agh.backend.utils.jwt.JwtUtils;
 
 import java.util.List;
 
@@ -18,10 +22,12 @@ public class GameController {
 
     public final GameService gameService;
     public final VirtualClassService virtualClassService;
+    private final JwtUtils jwtUtils;
 
-    public GameController(GameService gameService, VirtualClassService virtualClassService) {
+    public GameController(GameService gameService, VirtualClassService virtualClassService, JwtUtils jwtUtils) {
         this.gameService = gameService;
         this.virtualClassService = virtualClassService;
+        this.jwtUtils = jwtUtils;
     }
 
     @PostMapping(path = "/start")
@@ -41,13 +47,22 @@ public class GameController {
         return ResponseEntity.ok("Gra zakończona. Formularze zostały zapisane.");
     }
 
-    @GetMapping(path = "/getForms/{name}")
-    public ResponseEntity<List<FillableForm>> getForm(@PathVariable String name) {
-        if (VirtualClassService.isAccessible) {
-            throw new GameHasNotBeenStartedException();
+    @GetMapping(path = "/getForms")
+    public ResponseEntity<List<FillableForm>> getForm(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+
+//            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+//                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//            }
+//            if (VirtualClassService.isAccessible) {
+//                throw new GameHasNotBeenStartedException();
+//            }
+            return ResponseEntity.ok(gameService.getFormsForStudent(authName));
+
+        } catch (RequestWithoutAuthorizationException|GameHasNotBeenStartedException e) {
+            return ResponseEntity.badRequest().build();
         }
-
-
-        return ResponseEntity.ok(gameService.getFormsForStudent(name));
     }
 }
