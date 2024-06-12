@@ -11,6 +11,7 @@ import VirtualClassCreator from "./components/VirtualClassCreator.tsx";
 import LoginScreen from "./components/LoginScreen.tsx";
 import WaitingRoomScreen from './components/WaitingRoomScreen.tsx';
 import FormCreation from "./components/FormCreation.tsx";
+import AnswerScreen from "./components/AnswerScreen.tsx";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
         path: "/class/form",
         element: <FormCreation />
+    },
+    {
+        path: "/class/answer",
+        element: <AnswerScreen />
     }
 ]);
 
