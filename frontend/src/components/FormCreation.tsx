@@ -11,7 +11,7 @@ import {FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInpu
 import {useNavigate} from 'react-router-dom';
 
 
-export type FormCreation = {
+export type FormCreationType = {
     longQuestions: {
         label: string;
         questions: string[];
@@ -84,7 +84,7 @@ const MAX_QUESTIONS = 3;
 
 export default function FormCreation() {
     // Create nested form
-    const [FormCreation, {Form, Field, FieldArray}] = useForm<FormCreation>({
+    const [FormCreation, {Form, Field, FieldArray}] = useForm<FormCreationType>({
         initialValues,
     });
 

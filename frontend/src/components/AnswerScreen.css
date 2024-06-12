@@ -1,0 +1,17 @@
+.flex-radio
+{
+    align-items: center;
+}
+
+.flex-radio input[type=radio]
+{
+    width: 30px;
+    margin-right: 20px;
+    margin-top: 0;
+}
+.flex-radio input[type=checkbox]
+{
+    width: 30px;
+    margin-right: 20px;
+    margin-top: 0;
+}

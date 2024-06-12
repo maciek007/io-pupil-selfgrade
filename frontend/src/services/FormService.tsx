@@ -13,8 +13,8 @@ export const createForm = (form: FormCreationType) => {
     const data = {
         longQuestionFields: form.longQuestions.questions,
         shortQuestionFields: form.shortQuestions.questions,
-        multiSelectionFields: !form.multipleSelectionQuestions?undefined:form.multipleSelectionQuestions.map(item=> item.questions),
-        singleSelectionFields: !form.singleSelectionQuestions?undefined:form.singleSelectionQuestions.map(item=> item.questions),
+        multiSelectionFields: form.multipleSelectionQuestions.questions,
+        singleSelectionFields: form.singleSelectionQuestions.questions,
         checkboxFields: form.checkboxQuestions.questions,
     };
     return axios.post(environment.backEnd + "/form", data, axiosConfig);

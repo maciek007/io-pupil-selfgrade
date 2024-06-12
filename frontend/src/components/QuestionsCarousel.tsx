@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {sendAnswer} from "../services/FormService.tsx";
 
 export default function QuestionsCarousel({questions, name, nextPerson}) {
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -9,7 +10,7 @@ export default function QuestionsCarousel({questions, name, nextPerson}) {
     const questionsText: string[] = [];
 
     const studentName =  name.replace(' ',"%20");
-    console.log(questions, studentName);
+    //console.log(questions, studentName);
 
     function handleNext(e:Event){
         e.preventDefault();
@@ -20,15 +21,15 @@ export default function QuestionsCarousel({questions, name, nextPerson}) {
                 data.answers.push(e.target.answer.value)
                 break;
             case 1:
-                for(answer of e.target.getElementsByTagName("input"))
-                    data.answers.push(answer.value)
+                for(let answer of e.target.getElementsByTagName("input")) {
+                    if(answer.checked)
+                        data.answers.push(answer.value)
+                }
                 break;
             case 2:
-                break;
-            case 3:
-                break;
         }
-        console.log(data)
+        sendAnswer(studentName,data);
+
         if(currentIndex==items.length-1)
         {
             setCurrentIndex(0);
@@ -60,25 +61,25 @@ export default function QuestionsCarousel({questions, name, nextPerson}) {
             return (
                 <div key={id++}>
                     <h3>{sq}</h3>
-                    <input minLength={5} maxLength={30} required type="text"></input>
+                    <input minLength={5} maxLength={30} required type="text" name="answer"></input>
                 </div>
             )
         }))
     }
 
-    if (questions.mutiSelections) {
-        items.push(...questions.mutiSelections.map((ms: string[]) => {
+    if (questions.multiSelections) {
+        items.push(...questions.multiSelections.map((ms: any) => {
             questionType.push(1);
-            questionsText.push();
+            questionsText.push(ms.question);
             return (
                 <div key={id++}>
-                    <h3>{ms[0]}</h3>
-                    {ms.slice(1).map((option: string, index) =>
+                    <h3>{ms.question}</h3>
+                    {ms.options.map((option: string, index) =>
                         (
-                            <>
-                                <input type="checkbox" name={id - 1 + "-multi"} value={option}/>
+                            <div key={index} className="flex flex-radio">
+                                <input type="checkbox" name={(id - 1)+"-multi"} value={option}/>
                                 <label> {option} </label><br/>
-                            </>
+                            </div>
                         )
                     )}
                 </div>
@@ -87,17 +88,18 @@ export default function QuestionsCarousel({questions, name, nextPerson}) {
     }
 
     if (questions.singleSelections) {
-        items.push(...questions.singleSelections.map((ss: string[]) => {
+        items.push(...questions.singleSelections.map((ss: any) => {
             questionType.push(0);
+            questionsText.push(ss.question)
             return (
             <div key={id++}>
-                <h3>{ss[0]}</h3>
-                {ss.slice(1).map((option: string, index) =>
+                <h3>{ss.question}</h3>
+                {ss.options.map((option: string, index) =>
                     (
-                        <>
+                        <div key={index} className="flex flex-radio">
                             <input type="radio" name="answer" value={option} required/>
                             <label> {option} </label><br/>
-                        </>
+                        </div>
                     )
                 )}
             </div>
@@ -108,6 +110,7 @@ export default function QuestionsCarousel({questions, name, nextPerson}) {
     if (questions.checkboxes) {
         items.push(...questions.checkboxes.map((ss: string) => {
             questionType.push(0);
+            questionsText.push(ss)
             return (
                 <div key={id++}>
                     <h3>{ss}</h3>
