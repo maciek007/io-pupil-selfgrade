@@ -7,7 +7,7 @@ import pl.edu.agh.backend.models.Form;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FormParserTest {
-    private static final String VALID_JSON = "{\"longQuestionFields\":[\"Long question is correct. Long question is correct. Long question is correct.\",\"Long question is correct. Long question is correct. Long question is correct.\"],\"shortQuestionFields\":[\"shortQuestion1 shortQuestion1\",\"shortQuestion2 shortQuestion2\"],\"multiSelectionFields\":[{\"options\":[\"option1\",\"option2\", \"options3\"]},{\"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"options\":[\"option5\",\"option6\"]},{\"options\":[\"option7\",\"option8\"]}],\"radioButtonFields\":[\"radioButton1\",\"radioButton2\"],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
+    private static final String VALID_JSON = "{\"longQuestionFields\":[\"Long question is correct. Long question is correct. Long question is correct.\",\"Long question is correct. Long question is correct. Long question is correct.\"],\"shortQuestionFields\":[\"shortQuestion1 shortQuestion1\",\"shortQuestion2 shortQuestion2\"],\"multiSelectionFields\":[{\"question\": \"question1\", \"options\":[\"option1\",\"option2\", \"options3\"]},{\"question\": \"question2\", \"options\":[\"option4\",\"option5\"]}],\"singleSelectionFields\":[{\"question\": \"question1\", \"options\":[\"option5\",\"option6\"]},{\"question\": \"question1\", \"options\":[\"option7\",\"option8\"]}],\"radioButtonFields\":[\"radioButton1\",\"radioButton2\"],\"checkboxFields\":[\"checkbox1\",\"checkbox2\"]}";
 
 
     @Test
@@ -33,10 +33,10 @@ class FormParserTest {
         assertEquals(singleSelectionsExpectedSize, result.singleSelections().size());
         assertEquals(checkboxesExpectedSize, result.checkboxes().size());
 
-        assertEquals(firstMultiSelectionOptionsSize, result.multiSelections().get(0).size());
-        assertEquals(secondMultiSelectionOptionsSize, result.multiSelections().get(1).size());
-        assertEquals(firstSingleSelectionOptionsSize, result.singleSelections().get(0).size());
-        assertEquals(secondSingleSelectionOptionsSize, result.singleSelections().get(1).size());
+        assertEquals(firstMultiSelectionOptionsSize, result.multiSelections().get(0).options().size());
+        assertEquals(secondMultiSelectionOptionsSize, result.multiSelections().get(1).options().size());
+        assertEquals(firstSingleSelectionOptionsSize, result.singleSelections().get(0).options().size());
+        assertEquals(secondSingleSelectionOptionsSize, result.singleSelections().get(1).options().size());
 
     }
 }
