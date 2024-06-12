@@ -12,6 +12,7 @@ import LoginScreen from "./components/LoginScreen.tsx";
 import WaitingRoomScreen from './components/WaitingRoomScreen.tsx';
 import FormCreation from "./components/FormCreation.tsx";
 import AnswerScreen from "./components/AnswerScreen.tsx";
+import DisplayingRoomScreen from './components/DisplayingRoomScreen.tsx';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/class",
         element: <WaitingRoomScreen />
+    },
+    {
+        path: "/class/displaying",
+        element: <DisplayingRoomScreen />
     },
     {
         path: "/class/form",

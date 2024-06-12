@@ -6,9 +6,9 @@ import {
     minLength,
     maxLength,
 } from '@modular-forms/react';
-import {createForm, handleFormImport} from "../services/FormService.tsx";
-import {FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput} from './formComponents';
-import {useNavigate} from 'react-router-dom';
+import { createForm, handleFormImport } from "../services/FormService.ts";
+import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput } from './formComponents';
+import { useNavigate } from 'react-router-dom';
 
 
 export type FormCreationType = {
@@ -77,14 +77,12 @@ const initialValues = {
     },
 }
 
-//TODO: ADD VALIDATION
-
 const MIN_REQUIRED_QUESTIONS = 1;
 const MAX_QUESTIONS = 3;
 
 export default function FormCreation() {
     // Create nested form
-    const [FormCreation, {Form, Field, FieldArray}] = useForm<FormCreationType>({
+    const [FormCreation, { Form, Field, FieldArray }] = useForm<FormCreationType>({
         initialValues,
     });
 
@@ -103,7 +101,7 @@ export default function FormCreation() {
             className="space-y-12 md:space-y-14 lg:space-y-16"
             onSubmit={(values) => handleSubmit(values)}
         >
-            <FormHeader handleFormImport={handleFormImport} of={FormCreation} heading="Tworzenie formularza"/>
+            <FormHeader handleFormImport={handleFormImport} of={FormCreation} heading="Tworzenie formularza" />
 
             <div className="space-y-5">
                 {/* Long Questions - Required */}
@@ -123,7 +121,7 @@ export default function FormCreation() {
                     </div>
                     <div>
                         <FieldArray name={`longQuestions.questions`}
-                                    validate={[required('To pole jest wymagane'), minLength(MIN_REQUIRED_QUESTIONS, `Wymagane jest co najmniej ${MIN_REQUIRED_QUESTIONS} pytanie`), maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`)]}
+                            validate={[required('To pole jest wymagane'), minLength(MIN_REQUIRED_QUESTIONS, `Wymagane jest co najmniej ${MIN_REQUIRED_QUESTIONS} pytanie`), maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`)]}
                         >
                             {(fieldArray) => (
                                 <>
@@ -553,7 +551,7 @@ export default function FormCreation() {
             </div>
 
 
-            <FormFooter of={FormCreation}/>
+            <FormFooter of={FormCreation} />
         </Form>
     );
 }

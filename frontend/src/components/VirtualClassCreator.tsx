@@ -1,7 +1,7 @@
 import "./VirtualClassCreator.css";
 import {useState} from "react";
-import {createVirtualClass} from "../services/VirtualClassService.tsx";
-import {saveToken} from "../services/StorageService.tsx";
+import {createVirtualClass} from "../services/VirtualClassService.ts";
+import {saveToken} from "../services/StorageService.ts";
 import {useNavigate} from "react-router-dom";
 
 function VirtualClassCreator() {
