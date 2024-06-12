@@ -80,10 +80,40 @@ public class FormsController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             return ResponseEntity.ok(virtualClassService.getAnswers(name));
+
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/answer/admin/get")
+    public ResponseEntity<Map<String, Map<String, List<Answer>>>> getAllAnswers(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            return ResponseEntity.ok(virtualClassService.getAllAnswers());
+
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/answer/get")
+    public ResponseEntity<Map<String, List<Answer>>> getAllAnonymousAnswers(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            return ResponseEntity.ok(virtualClassService.getAllAnonymousAnswers());
 
         } catch (RequestWithoutAuthorizationException e) {
             return ResponseEntity.badRequest().build();

@@ -170,4 +170,20 @@ public class VirtualClassService {
         }
         return student.getAnswers();
     }
+
+    public Map<String, List<Answer>> getAllAnonymousAnswers() {
+        Map<String, List<Answer>> allAnswers = new LinkedHashMap<>();
+        for (Student student : virtualClass.getStudents().values()) {
+            allAnswers.put(student.getName(), student.getAnonymousAnswers());
+        }
+        return allAnswers;
+    }
+
+    public Map<String, Map<String, List<Answer>>> getAllAnswers() {
+        Map<String, Map<String, List<Answer>>> allAnswers = new LinkedHashMap<>();
+        for (Student student : virtualClass.getStudents().values()) {
+            allAnswers.put(student.getName(), student.getAnswers());
+        }
+        return allAnswers;
+    }
 }
