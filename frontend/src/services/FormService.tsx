@@ -9,15 +9,13 @@ export const createForm = (form: FormCreationType) => {
             'Authorization': 'Bearer ' + getToken()
         }
     };
-    form.singleChoiceQuestions.length == 0
-    //TODO: add the rest of the fields
-    console.log(form);
+
     const data = {
         longQuestionFields: form.longQuestions.questions,
         shortQuestionFields: form.shortQuestions.questions,
-        multiSelectionFields: !form.multipleChoiceQuestions?undefined:form.multipleChoiceQuestions.map((question)=>{return {"options": question.questions}}),
-        singleSelectionFields: !form.singleChoiceQuestions?undefined:form.singleChoiceQuestions.map((question)=>{return {"options": question.questions}}),
-        checkboxFields: form.checkboxQuestions.questions
+        multiSelectionFields: form.multipleSelectionQuestions.questions,
+        singleSelectionFields: form.singleSelectionQuestions.questions,
+        checkboxFields: form.checkboxQuestions.questions,
     };
     return axios.post(environment.backEnd + "/form", data, axiosConfig);
 }
