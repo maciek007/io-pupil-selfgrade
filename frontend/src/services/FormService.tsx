@@ -9,12 +9,12 @@ export const createForm = (form: FormCreationType) => {
             'Authorization': 'Bearer ' + getToken()
         }
     };
-
+    console.log(form)
     const data = {
         longQuestionFields: form.longQuestions.questions,
         shortQuestionFields: form.shortQuestions.questions,
-        multiSelectionFields: form.multipleSelectionQuestions.questions,
-        singleSelectionFields: form.singleSelectionQuestions.questions,
+        multiSelectionFields: !form.multipleSelectionQuestions?undefined:form.multipleSelectionQuestions.map(item=> item.questions),
+        singleSelectionFields: !form.singleSelectionQuestions?undefined:form.singleSelectionQuestions.map(item=> item.questions),
         checkboxFields: form.checkboxQuestions.questions,
     };
     return axios.post(environment.backEnd + "/form", data, axiosConfig);
