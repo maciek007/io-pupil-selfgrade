@@ -19,9 +19,6 @@ export const createForm = (form: FormCreationType) => {
     };
     return axios.post(environment.backEnd + "/form", data, axiosConfig);
 }
-export const handleFormImport = () => {
-    console.log("Importing form");
-};
 
 export const getForms = () =>
 {
