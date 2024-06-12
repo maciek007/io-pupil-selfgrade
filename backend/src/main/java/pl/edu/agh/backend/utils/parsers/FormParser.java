@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pl.edu.agh.backend.models.Form;
+import pl.edu.agh.backend.models.SelectQuestion;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class FormParser {
         return JsonParser.getArrayField(json, value);
     }
 
-    private static List<List<String>> parseComplexListFields(JsonNode json, String value) {
+    private static List<SelectQuestion> parseComplexListFields(JsonNode json, String value) {
         return JsonParser.getArrayOfOptions(json, value);
     }
 

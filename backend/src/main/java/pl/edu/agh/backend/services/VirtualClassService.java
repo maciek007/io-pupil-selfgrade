@@ -121,7 +121,8 @@ public class VirtualClassService {
             if (!formJsonValidator.validate(json)) {
                 throw new IllegalArgumentException("Invalid json");
             }
-            virtualClass.setForm(FormParser.parse(json));
+            Form form = FormParser.parse(json);
+            virtualClass.setForm(form);
             return true;
         } catch (JsonProcessingException e) {
             return false;
