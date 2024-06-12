@@ -2,10 +2,7 @@ package pl.edu.agh.backend.models;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 public class Student {
@@ -34,7 +31,7 @@ public class Student {
         return answerList.stream().anyMatch(a -> a.question().equals(answer.question()));
     }
 
-    public List<Answer> getAnswers() {
+    public List<Answer> getAnonymousAnswers() {
         if (answers.isEmpty()) {
             return new LinkedList<>();
         }
@@ -43,5 +40,12 @@ public class Student {
             result.addAll(answers.get(answerer));
         }
         return result;
+    }
+
+    public Map<String, List<Answer>> getAnswers() {
+        if (answers.isEmpty()) {
+            return new LinkedHashMap<>();
+        }
+        return answers;
     }
 }

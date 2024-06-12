@@ -11,6 +11,7 @@ import pl.edu.agh.backend.utils.API_PATH;
 import pl.edu.agh.backend.utils.jwt.JwtUtils;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -59,8 +60,23 @@ public class FormsController {
         }
     }
 
-    @GetMapping(path = "/answer/{name}")
-    public ResponseEntity<List<Answer>> getAnswers(@PathVariable String name, @RequestHeader HttpHeaders headers) {
+    @GetMapping(path = "/answer/get/{name}")
+    public ResponseEntity<List<Answer>> getAnonymousAnswers(@PathVariable String name) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String authName = jwtUtils.extractName(jwtToken);
+            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            return ResponseEntity.ok(virtualClassService.getAnonymousAnswers(name));
+
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/answer/admin/get/{name}")
+    public ResponseEntity<Map<String, List<Answer>>> getAnswers(@PathVariable String name, @RequestHeader HttpHeaders headers) {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
@@ -73,5 +89,4 @@ public class FormsController {
             return ResponseEntity.badRequest().build();
         }
     }
-
 }

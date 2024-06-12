@@ -14,8 +14,10 @@ import pl.edu.agh.backend.utils.parsers.AnswerParser;
 import pl.edu.agh.backend.utils.parsers.FormParser;
 import pl.edu.agh.backend.utils.validators.JsonValidator;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VirtualClassService {
@@ -140,10 +142,18 @@ public class VirtualClassService {
         }
     }
 
-    public List<Answer> getAnswers(String name) {
+    public List<Answer> getAnonymousAnswers(String name) {
         Student student = virtualClass.getStudents().get(name);
         if (student == null) {
             return new LinkedList<>();
+        }
+        return student.getAnonymousAnswers();
+    }
+
+    public Map<String, List<Answer>> getAnswers(String name) {
+        Student student = virtualClass.getStudents().get(name);
+        if (student == null) {
+            return new LinkedHashMap<>();
         }
         return student.getAnswers();
     }
