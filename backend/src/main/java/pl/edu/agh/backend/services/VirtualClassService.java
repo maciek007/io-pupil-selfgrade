@@ -2,13 +2,11 @@ package pl.edu.agh.backend.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
+import pl.edu.agh.backend.exceptions.types.*;
 import pl.edu.agh.backend.models.Answer;
+import pl.edu.agh.backend.models.Form;
 import pl.edu.agh.backend.models.Student;
 import pl.edu.agh.backend.models.VirtualClass;
-import pl.edu.agh.backend.exceptions.types.StudentAlreadyExistsException;
-import pl.edu.agh.backend.exceptions.types.StudentNotFoundException;
-import pl.edu.agh.backend.exceptions.types.VirtualClassAlreadyCreatedException;
-import pl.edu.agh.backend.exceptions.types.VirtualClassNotFoundException;
 import pl.edu.agh.backend.utils.JsonSchemaFactory;
 import pl.edu.agh.backend.utils.parsers.AnswerParser;
 import pl.edu.agh.backend.utils.parsers.FormParser;
@@ -21,9 +19,10 @@ import java.util.Map;
 
 @Service
 public class VirtualClassService {
-    private VirtualClass virtualClass = null;
+    public static boolean isAccessible = true;
     private final JsonValidator formJsonValidator;
     private final JsonValidator answerJsonValidator;
+    private VirtualClass virtualClass = null;
 
     public VirtualClassService() {
         this.formJsonValidator = new JsonValidator(JsonSchemaFactory.getSchema("form"));
@@ -93,6 +92,13 @@ public class VirtualClassService {
         return virtualClass.getStudents().keySet().stream().toList();
     }
 
+    public int getNumberOfStudents() {
+        if (virtualClass == null) {
+            throw new VirtualClassNotFoundException();
+        }
+        return virtualClass.getStudents().size();
+    }
+
     public boolean notTeacher(String securityCode) {
         return !securityCode.equals(virtualClass.getSecurityCode());
     }
@@ -121,6 +127,13 @@ public class VirtualClassService {
             return false;
         }
 
+    }
+
+    public Form getForm() {
+        if (virtualClass == null) {
+            throw new FormHasNotBeenCreatedException();
+        }
+        return virtualClass.getForm();
     }
 
     public boolean addAnswer(String name, String answerer, String answerJson) {

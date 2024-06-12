@@ -64,7 +64,11 @@ public class VirtualClassController {
 
     @PostMapping(path = "/join")
     public ResponseEntity<String> joinVirtualClass(@Valid @RequestBody RequestDTO request)
-            throws VirtualClassNotFoundException, StudentAlreadyExistsException {
+            throws VirtualClassNotFoundException, StudentAlreadyExistsException, VirtualClassIsNotAccessibleException {
+        if (!VirtualClassService.isAccessible) {
+            throw new VirtualClassIsNotAccessibleException();
+        }
+
         String name = request.getName();
         String code = request.getCode();
         virtualClassService.joinClass(name, code);

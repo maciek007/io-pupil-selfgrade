@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import pl.edu.agh.backend.exceptions.types.StudentAlreadyExistsException;
-import pl.edu.agh.backend.exceptions.types.VirtualClassAlreadyCreatedException;
-import pl.edu.agh.backend.exceptions.types.VirtualClassNotFoundException;
+import pl.edu.agh.backend.exceptions.types.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -51,10 +49,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+
     @ResponseStatus(value = HttpStatus.CONFLICT)
     @ExceptionHandler({
             VirtualClassAlreadyCreatedException.class,
             StudentAlreadyExistsException.class,
+            FormHasNotBeenCreatedException.class,
+            GameHasNotBeenStartedException.class
+
     })
     public final ResponseEntity<ErrorDetails> handleConflictException(Exception ex, WebRequest request) {
         Map<String, String> messages = new HashMap<>();
@@ -68,5 +70,41 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
+    }
+
+    @ResponseStatus(value = HttpStatus.LOCKED)
+    @ExceptionHandler({
+            VirtualClassIsNotAccessibleException.class,
+    })
+    public final ResponseEntity<ErrorDetails> handleLockedException(Exception ex, WebRequest request) {
+        Map<String, String> messages = new HashMap<>();
+        messages.put("message", ex.getMessage());
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                messages,
+                request.getDescription(false),
+                LocalDateTime.now(),
+                HttpStatus.LOCKED.value()
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.LOCKED);
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            GameCannotStartWithoutMinimumNumberOfStudents.class,
+    })
+    public final ResponseEntity<ErrorDetails> handleBadRequestException(Exception ex, WebRequest request) {
+        Map<String, String> messages = new HashMap<>();
+        messages.put("message", ex.getMessage());
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                messages,
+                request.getDescription(false),
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value()
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 }
