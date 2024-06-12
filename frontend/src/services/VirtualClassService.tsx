@@ -5,6 +5,7 @@ import { environment } from "../environments/environment.tsx";
 const axiosConfig = {
     headers: {
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
         'Authorization': 'Bearer ' + getToken()
     }
 }

@@ -16,7 +16,6 @@ import pl.edu.agh.backend.utils.jwt.JwtUtils;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = API_PATH.root + API_PATH.game)
 public class GameController {
 

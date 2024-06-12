@@ -6,10 +6,11 @@ export const createForm = (form: FormCreationType) => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     };
-    console.log(form)
+
     const data = {
         longQuestionFields: form.longQuestions.questions,
         shortQuestionFields: form.shortQuestions.questions,
@@ -38,6 +39,7 @@ export const sendAnswer = (name: string, data) =>
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     };
