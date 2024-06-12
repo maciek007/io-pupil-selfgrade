@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 @Builder
-public record Form(List<String> longQuestions, List<String> shortQuestions, List<List<String>> multiSelections,
-                   List<List<String>> singleSelections, List<String> checkboxes) implements Parseable {
+public record Form(List<String> longQuestions, List<String> shortQuestions, List<SelectQuestion> multiSelections,
+                   List<SelectQuestion> singleSelections, List<String> checkboxes) implements Parseable {
 
     public Form {
         if (longQuestions == null) {
