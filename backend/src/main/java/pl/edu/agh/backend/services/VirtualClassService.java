@@ -12,7 +12,10 @@ import pl.edu.agh.backend.utils.parsers.AnswerParser;
 import pl.edu.agh.backend.utils.parsers.FormParser;
 import pl.edu.agh.backend.utils.validators.JsonValidator;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VirtualClassService {
@@ -150,5 +153,37 @@ public class VirtualClassService {
         } catch (JsonProcessingException e) {
             return false;
         }
+    }
+
+    public List<Answer> getAnonymousAnswers(String name) {
+        Student student = virtualClass.getStudents().get(name);
+        if (student == null) {
+            return new LinkedList<>();
+        }
+        return student.getAnonymousAnswers();
+    }
+
+    public Map<String, List<Answer>> getAnswers(String name) {
+        Student student = virtualClass.getStudents().get(name);
+        if (student == null) {
+            return new LinkedHashMap<>();
+        }
+        return student.getAnswers();
+    }
+
+    public Map<String, List<Answer>> getAllAnonymousAnswers() {
+        Map<String, List<Answer>> allAnswers = new LinkedHashMap<>();
+        for (Student student : virtualClass.getStudents().values()) {
+            allAnswers.put(student.getName(), student.getAnonymousAnswers());
+        }
+        return allAnswers;
+    }
+
+    public Map<String, Map<String, List<Answer>>> getAllAnswers() {
+        Map<String, Map<String, List<Answer>>> allAnswers = new LinkedHashMap<>();
+        for (Student student : virtualClass.getStudents().values()) {
+            allAnswers.put(student.getName(), student.getAnswers());
+        }
+        return allAnswers;
     }
 }
