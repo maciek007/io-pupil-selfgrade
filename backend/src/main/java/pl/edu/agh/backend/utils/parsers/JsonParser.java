@@ -3,6 +3,7 @@ package pl.edu.agh.backend.utils.parsers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import pl.edu.agh.backend.models.Parseable;
+import pl.edu.agh.backend.models.SelectQuestion;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,17 +41,18 @@ public final class JsonParser {
         return result;
     }
 
-    public static List<List<String>> getArrayOfOptions(JsonNode json, String value) {
+    public static List<SelectQuestion> getArrayOfOptions(JsonNode json, String value) {
         if (json.findValue(value) == null) {
             return null;
         }
 
         JsonNode node = json.findValue(value);
-        List<List<String>> result = new ArrayList<>();
+        List<SelectQuestion> result = new ArrayList<>();
 
         for (JsonNode jsonNode : node) {
+            JsonNode question = jsonNode.findValue("question");
             Iterator<JsonNode> jsonNodeIterator = jsonNode.findValue("options").iterator();
-            result.add(parseOptions(jsonNodeIterator));
+            result.add(SelectQuestion.builder().question(question.asText()).options(parseOptions(jsonNodeIterator)).build());
         }
 
         return result;
