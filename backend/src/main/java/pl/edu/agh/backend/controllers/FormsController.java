@@ -61,7 +61,7 @@ public class FormsController {
     }
 
     @GetMapping(path = "/answer/get/{name}")
-    public ResponseEntity<List<Answer>> getAnonymousAnswers(@PathVariable String name) {
+    public ResponseEntity<List<Answer>> getAnonymousAnswers(@PathVariable String name, @RequestHeader HttpHeaders headers) {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
