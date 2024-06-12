@@ -37,6 +37,28 @@ public class VirtualClassController {
         return new ResponseEntity<>(json.toString(), HttpStatus.CREATED);
     }
 
+    @GetMapping(path = "isTeacher")
+    public ResponseEntity<Boolean> isTeacher(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String name = jwtUtils.extractName(jwtToken);
+            return ResponseEntity.ok(!virtualClassService.notTeacher(name));
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "isStudent")
+    public ResponseEntity<Boolean> isStudent(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String name = jwtUtils.extractName(jwtToken);
+            return ResponseEntity.ok(!virtualClassService.notStudent(name));
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @DeleteMapping(path = "")
     public ResponseEntity<Void> deleteVirtualClass(@RequestHeader HttpHeaders headers) throws VirtualClassNotFoundException {
         try {

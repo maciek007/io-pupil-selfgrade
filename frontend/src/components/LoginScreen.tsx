@@ -2,8 +2,8 @@ import "./LoginScreen.css"
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { joinClass } from "../services/LoginService.tsx";
-import { saveToken } from "../services/StorageService.tsx";
+import { joinClass } from "../services/LoginService.ts";
+import { saveToken } from "../services/StorageService.ts";
 
 function LoginScreen() {
     const navigate = useNavigate();

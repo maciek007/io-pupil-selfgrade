@@ -32,17 +32,14 @@
         "additionalProperties": false,
         "properties": {
           "question": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "options": {
             "type": "array",
             "description": "Options for multi selection",
             "minItems": 1,
             "items": {
-              "type": "string",
-              "minLength": 1,
-              "pattern": "^\\S+(\\s+\\S+)*$"
+              "type": "string"
             }
           }
         },
@@ -62,17 +59,14 @@
         "additionalProperties": false,
         "properties": {
           "question": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "options": {
             "type": "array",
             "description": "Options for multi selection",
             "minItems": 1,
             "items": {
-              "type": "string",
-              "minLength": 1,
-              "pattern": "^\\S+(\\s+\\S+)*$"
+              "type": "string"
             }
           }
         },
