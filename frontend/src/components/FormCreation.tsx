@@ -2,11 +2,13 @@ import {
     useForm,
     remove,
     insert,
+    required,
+    minLength,
+    maxLength,
 } from '@modular-forms/react';
-import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, InputError, TextAreaInput } from './formComponents';
-import { maxLength, minLength } from '@modular-forms/react';
-import {createForm, handleFormImport} from "../services/FormService.tsx";
-import {useNavigate} from "react-router-dom";
+import { createForm, handleFormImport } from "../services/FormService.tsx";
+import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput } from './formComponents';
+import { useNavigate } from 'react-router-dom';
 
 
 type FormCreation = {
@@ -20,14 +22,20 @@ type FormCreation = {
         questions: string[];
     };
 
-    multipleChoiceQuestions: {
+    multipleSelectionQuestions: {
         label: string;
-        questions: string[];
+        questions: {
+            question: string;
+            options: string[];
+        }
     }[];
 
-    singleChoiceQuestions: {
+    singleSelectionQuestions: {
         label: string;
-        questions: string[];
+        questions: {
+            question: string;
+            options: string[];
+        }
     }[];
 
     checkboxQuestions: {
@@ -47,14 +55,20 @@ const initialValues = {
         questions: [],
     },
 
-    multipleChoiceQuestions: [{
+    multipleSelectionQuestions: [{
         label: 'Pytania wielokrotnego wyboru',
-        questions: [],
+        questions: {
+            question: '',
+            options: ['']
+        }
     }],
 
-    singleChoiceQuestions: [{
+    singleSelectionQuestions: [{
         label: 'Pytania jednokrotnego wyboru',
-        questions: [],
+        questions: {
+            question: '',
+            options: ['']
+        }
     }],
 
     checkboxQuestions: {
@@ -65,8 +79,8 @@ const initialValues = {
 
 //TODO: ADD VALIDATION
 
-const MAX_QUESTIONS = 2;
 const MIN_REQUIRED_QUESTIONS = 1;
+const MAX_QUESTIONS = 3;
 
 export default function FormCreation() {
     // Create nested form
@@ -93,13 +107,14 @@ export default function FormCreation() {
 
             <div className="space-y-5">
                 {/* Long Questions - Required */}
-                <div className='flex-1 space-y-5 rounded-2xl border-2 border-slate-200 bg-slate-100/25 py-6 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
+                <div className='flex-1 space-y-5 rounded-2xl border-2 border-slate-400 bg-slate-100/25 py-6 hover:border-slate-100 dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
                     <div className="flex space-x-5 px-6">
                         <Field name={`longQuestions.label`}>
                             {(field, props) => (
                                 <InputLabel
                                     {...props}
-                                    label={field.value as string}
+                                    ref={null}
+                                    label={field.value as unknown as string}
                                     required
                                 />
                             )}
@@ -107,62 +122,73 @@ export default function FormCreation() {
                     </div>
                     <div>
                         <FieldArray name={`longQuestions.questions`}
+                            validate={[required('To pole jest wymagane'), minLength(MIN_REQUIRED_QUESTIONS, `Wymagane jest co najmniej ${MIN_REQUIRED_QUESTIONS} pytanie`), maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`)]}
                         >
                             {(fieldArray) => (
-                                <div className="space-y-5 px-6">
-                                    {fieldArray.items.value.map((option, index) => (
-                                        <div key={option} className="flex space-x-5">
-                                            <Field name={`${fieldArray.name}.${index}`}>
-                                                {(field, props) => (
-                                                    <TextAreaInput
-                                                        {...props}
-                                                        className="flex-1 !p-0"
-                                                        value={field.value}
-                                                        error={field.error}
-                                                        placeholder="Wprowadź pytanie"
-                                                    />
-                                                )}
-                                            </Field>
+                                <>
+                                    <div className="space-y-5 px-6">
+                                        {fieldArray.items.value.map((option, index) => (
+                                            <div key={option} className="flex space-x-5">
+                                                <Field name={`${fieldArray.name}.${index}`}>
+                                                    {(field, props) => (
+                                                        <TextAreaInput
+                                                            {...props}
+                                                            className="flex-1 !p-0"
+                                                            value={field.value}
+                                                            error={field.error}
+                                                            placeholder="Wprowadź pytanie"
+                                                        />
+                                                    )}
+                                                </Field>
 
+                                                <ColorButton
+                                                    color="red"
+                                                    label="Usuń"
+                                                    width="auto"
+                                                    onClick={() =>
+                                                        remove(FormCreation, fieldArray.name, {
+                                                            at: index,
+                                                        })
+                                                    }
+                                                />
+                                            </div>
+                                        ))}
+
+                                        <div className="flex flex-wrap gap-4">
                                             <ColorButton
-                                                color="red"
-                                                label="Usuń"
-                                                width="auto"
+                                                color="green"
+                                                label="Dodaj pytanie"
                                                 onClick={() =>
-                                                    remove(FormCreation, fieldArray.name, {
-                                                        at: index,
+                                                    insert(FormCreation, fieldArray.name, {
+                                                        value: ''
+                                                        ,
                                                     })
                                                 }
                                             />
                                         </div>
-                                    ))}
-
-                                    <div className="flex flex-wrap gap-4">
-                                        <ColorButton
-                                            color="green"
-                                            label="Dodaj pytanie"
-                                            onClick={() =>
-                                                insert(FormCreation, fieldArray.name, {
-                                                    value: ''
-                                                    ,
-                                                })
-                                            }
-                                        />
                                     </div>
-                                </div>
+                                    {fieldArray.error && fieldArray.error.toString().length > 0 &&
+                                        <div className="space-y-5 px-6 mt-4">
+                                            <div className='flex-1 p-1 space-y-5 font-semibold text-slate-50 rounded-2xl border-2 border-red-400 bg-red-600/90 hover:border-red-200 py-6  dark:border-red-700 dark:bg-red-700/75 dark:hover:border-red-600'>
+                                                {fieldArray.error}
+                                            </div>
+                                        </div>
+                                    }
+                                </>
                             )}
                         </FieldArray>
                     </div>
                 </div>
 
                 {/* Short Questions */}
-                <div className='flex-1 space-y-5 rounded-2xl border-2 border-slate-200 bg-slate-100/25 py-6 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
+                <div className='flex-1 space-y-5 rounded-2xl border-2 border-slate-400 bg-slate-100/25 py-6 hover:border-slate-100 dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
                     <div className="flex space-x-5 px-6">
                         <Field name={`shortQuestions.label`}>
                             {(field, props) => (
                                 <InputLabel
                                     {...props}
-                                    label={field.value as string}
+                                    ref={null}
+                                    label={field.value as unknown as string}
                                 />
                             )}
                         </Field>
@@ -219,8 +245,8 @@ export default function FormCreation() {
 
                 {/* Multiselection */}
 
-                <div className='flex-1 p-1 space-y-5 rounded-2xl border-2 border-slate-200 bg-slate-100/25 py-6  dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
-                    <FieldArray name="multipleChoiceQuestions">
+                <div className='flex-1 p-1 space-y-5 rounded-2xl border-2 border-slate-400 bg-slate-100/25 py-6  dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
+                    <FieldArray name="multipleSelectionQuestions">
                         {(fieldArray) => (
                             <>
                                 {fieldArray.items.value.map((item, index) => (
@@ -233,13 +259,29 @@ export default function FormCreation() {
                                                 {(field, props) => (
                                                     <InputLabel
                                                         {...props}
-                                                        label={field.value as string}
+                                                        ref={null}
+                                                        label={field.value as unknown as string}
                                                     />
                                                 )}
                                             </Field>
                                         </div>
 
-                                        <FieldArray name={`${fieldArray.name}.${index}.questions`}>
+                                        <div className="space-y-5 px-6">
+                                            <Field name={`${fieldArray.name}.${index}.questions.question`}>
+                                                {(field, props) => (
+                                                    <TextInput
+                                                        {...props}
+                                                        className="flex-1 !p-0"
+                                                        value={field.value}
+                                                        error={field.error}
+                                                        type="text"
+                                                        placeholder="Wprowadź pytanie"
+                                                    />
+                                                )}
+                                            </Field>
+                                        </div>
+
+                                        <FieldArray name={`${fieldArray.name}.${index}.questions.options`}>
                                             {(fieldArray) => (
                                                 <div className="space-y-5 px-6">
                                                     {fieldArray.items.value.map((option, index) => (
@@ -295,7 +337,12 @@ export default function FormCreation() {
                                         label="Dodaj pytanie wielokrotnego wyboru"
                                         onClick={() =>
                                             insert(FormCreation, fieldArray.name, {
-                                                value: { label: 'Pytanie wielokrotnego wyboru', questions: [] },
+                                                value: {
+                                                    label: 'Pytanie wielokrotnego wyboru', questions: {
+                                                        question: '',
+                                                        options: []
+                                                    }
+                                                },
                                             })
                                         }
                                     />
@@ -319,8 +366,8 @@ export default function FormCreation() {
 
                 {/* Single selection */}
 
-                <div className='flex-1 p-1 space-y-5 rounded-2xl border-2 border-slate-200 bg-slate-100/25 py-6  dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
-                    <FieldArray name="singleChoiceQuestions">
+                <div className='flex-1 p-1 space-y-5 rounded-2xl border-2 border-slate-400 bg-slate-100/25 py-6  dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
+                    <FieldArray name="singleSelectionQuestions">
                         {(fieldArray) => (
                             <>
                                 {fieldArray.items.value.map((item, index) => (
@@ -333,13 +380,28 @@ export default function FormCreation() {
                                                 {(field, props) => (
                                                     <InputLabel
                                                         {...props}
-                                                        label={field.value as string}
+                                                        ref={null}
+                                                        label={field.value as unknown as string}
+                                                    />
+                                                )}
+                                            </Field>
+                                        </div>
+                                        <div className="space-y-5 px-6">
+                                            <Field name={`${fieldArray.name}.${index}.questions.question`}>
+                                                {(field, props) => (
+                                                    <TextInput
+                                                        {...props}
+                                                        className="flex-1 !p-0"
+                                                        value={field.value}
+                                                        error={field.error}
+                                                        type="text"
+                                                        placeholder="Wprowadź pytanie"
                                                     />
                                                 )}
                                             </Field>
                                         </div>
 
-                                        <FieldArray name={`${fieldArray.name}.${index}.questions`}>
+                                        <FieldArray name={`${fieldArray.name}.${index}.questions.options`}>
                                             {(fieldArray) => (
                                                 <div className="space-y-5 px-6">
                                                     {fieldArray.items.value.map((option, index) => (
@@ -395,7 +457,10 @@ export default function FormCreation() {
                                         label="Dodaj pytanie jednokrotneg wyboru"
                                         onClick={() =>
                                             insert(FormCreation, fieldArray.name, {
-                                                value: { label: 'Pytanie jednokrotneg wyboru', questions: [] },
+                                                value: {
+                                                    label: 'Pytanie jednokrotneg wyboru', questions:
+                                                        { question: '', options: [] }
+                                                },
                                             })
                                         }
                                     />
@@ -418,13 +483,14 @@ export default function FormCreation() {
                 </div>
 
                 {/* Checkboxes */}
-                <div className='flex-1 space-y-5 rounded-2xl border-2 border-slate-200 bg-slate-100/25 py-6 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
+                <div className='flex-1 space-y-5 rounded-2xl border-2 border-slate-400 bg-slate-100/25 py-6 hover:border-slate-100 dark:border-slate-800 dark:bg-slate-800/10 dark:hover:border-slate-700'>
                     <div className="flex space-x-5 px-6">
                         <Field name={`checkboxQuestions.label`}>
                             {(field, props) => (
                                 <InputLabel
                                     {...props}
-                                    label={field.value as string}
+                                    ref={null}
+                                    label={field.value as unknown as string}
                                 />
                             )}
                         </Field>

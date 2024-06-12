@@ -1,15 +1,18 @@
 import clsx from 'clsx';
+import { LegacyRef } from 'react';
+
 type InputLabelProps = {
   name: string;
   label?: string;
   required?: boolean;
   margin?: 'none';
+  ref?: LegacyRef<HTMLLabelElement>
 };
 
 /**
  * Input label for a form field.
  */
-export function InputLabel({ name, label, required, margin }: InputLabelProps) {
+export function InputLabel({ name, label, required, margin, ref }: InputLabelProps) {
   return (
     <>
       {label && (
@@ -19,6 +22,7 @@ export function InputLabel({ name, label, required, margin }: InputLabelProps) {
             !margin && 'mb-4 lg:mb-5'
           )}
           htmlFor={name}
+          ref={ref}
         >
           {label}{' '}
           {required && (
