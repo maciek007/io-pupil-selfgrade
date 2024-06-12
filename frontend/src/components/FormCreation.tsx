@@ -5,7 +5,8 @@ import {
     required,
     minLength,
     maxLength,
-    reset
+    reset,
+    getValues
 } from '@modular-forms/react';
 import {createForm} from "../services/FormService.tsx";
 import {FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput} from './formComponents';
@@ -117,12 +118,24 @@ export default function FormCreation() {
         });
     };
 
+    function handleFormExport()
+    {
+        const export_json = JSON.stringify(getValues(FormCreation,undefined));
+        const elem = document.createElement("a");
+        const file = new Blob([export_json],{type: "application/json"});
+        elem.href = URL.createObjectURL(file);
+        elem.download = "formularz.json";
+        document.body.appendChild(elem);
+        elem.hidden = true;
+        elem.click();
+    }
+
     return (
         <Form
             className="space-y-12 md:space-y-14 lg:space-y-16"
             onSubmit={(values) => handleSubmit(values)}
         >
-            <FormHeader handleFormImport={handleFormImport} of={FormCreation} heading="Tworzenie formularza"/>
+            <FormHeader handleFormImport={handleFormImport} of={FormCreation} heading="Tworzenie formularza" handleFormExport={handleFormExport}/>
 
             <div className="space-y-5">
                 {/* Long Questions - Required */}
@@ -572,7 +585,7 @@ export default function FormCreation() {
             </div>
 
 
-            <FormFooter of={FormCreation}/>
+            <FormFooter of={FormCreation} handleFormExport={handleFormExport}/>
         </Form>
     );
 }
