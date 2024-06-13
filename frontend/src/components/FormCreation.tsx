@@ -5,10 +5,12 @@ import {
     required,
     minLength,
     maxLength,
+    reset
 } from '@modular-forms/react';
 import { createForm, handleFormImport } from "../services/FormService.ts";
 import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput } from './formComponents';
 import { useNavigate } from 'react-router-dom';
+
 
 
 export type FormCreationType = {
@@ -87,6 +89,24 @@ export default function FormCreation() {
     });
 
     const navigate = useNavigate();
+
+    const handleFormImport = (event: Event) => {
+        console.log("Importing form from" + event.target.files[0].name);
+        const fileReader = new FileReader();
+
+        fileReader.addEventListener(
+            "load",
+            () => {
+                // this will then display a text file
+                const json = JSON.parse(fileReader.result);
+                reset(FormCreation, { initialValues: json });
+            },
+            false,
+        );
+
+        fileReader.readAsText(event.target.files[0], "URF-8");
+        //setSelectedFile(event.target.files[0]);
+    };
 
     const handleSubmit = (values: FormCreationType) => {
         createForm(values).then(() => {

@@ -4,7 +4,7 @@ import { ActionButton } from './ActionButton';
 type FormHeaderProps = {
   of: FormStore<any, any>;
   heading: string;
-  handleFormImport: () => void;
+  handleFormImport: (e:Event) => void;
 };
 
 /**
@@ -23,12 +23,15 @@ export function FormHeader({ of: form, heading, handleFormImport }: FormHeaderPr
                 type="button"
                 onClick={() => reset(form)}
             />
-            <ActionButton
-                variant="secondary"
-                label="Importuj"
-                type="button"
-                onClick={handleFormImport}
-                />
+            <input
+                type="file"
+                accept=".json"
+                onChange={handleFormImport}
+                name="import"
+                id="import"
+                hidden
+            />
+            <label className="relative flex items-center justify-center rounded-2xl px-5 py-2.5 font-medium no-underline transition-colors md:text-lg lg:rounded-2xl lg:px-6 lg:py-3 lg:text-xl bg-sky-600 text-white hover:bg-sky-600/80 dark:bg-sky-400 dark:text-gray-900 dark:hover:bg-sky-400/80 my-4" htmlFor="import">Importuj</label>
             <ActionButton variant="primary" label="Prześlij" type="submit"/>
         </div>
     </header>
