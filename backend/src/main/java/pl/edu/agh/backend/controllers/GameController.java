@@ -16,7 +16,6 @@ import pl.edu.agh.backend.utils.jwt.JwtUtils;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = API_PATH.root + API_PATH.game)
 public class GameController {
 
@@ -53,12 +52,13 @@ public class GameController {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
 
-//            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
-//                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-//            }
-//            if (VirtualClassService.isAccessible) {
-//                throw new GameHasNotBeenStartedException();
-//            }
+            if (jwtUtils.isExpired(jwtToken)) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+            if (VirtualClassService.isAccessible) {
+                throw new GameHasNotBeenStartedException();
+            }
+
             return ResponseEntity.ok(gameService.getFormsForStudent(authName));
 
         } catch (RequestWithoutAuthorizationException|GameHasNotBeenStartedException e) {

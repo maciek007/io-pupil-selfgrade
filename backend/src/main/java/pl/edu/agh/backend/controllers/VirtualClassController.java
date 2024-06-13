@@ -16,7 +16,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = API_PATH.root + API_PATH.virtualClass)
 public class VirtualClassController {
     private final VirtualClassService virtualClassService;
@@ -35,6 +34,28 @@ public class VirtualClassController {
         JSONObject json = new JSONObject();
         json.put("access", access);
         return new ResponseEntity<>(json.toString(), HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "isTeacher")
+    public ResponseEntity<Boolean> isTeacher(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String name = jwtUtils.extractName(jwtToken);
+            return ResponseEntity.ok(!virtualClassService.notTeacher(name));
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "isStudent")
+    public ResponseEntity<Boolean> isStudent(@RequestHeader HttpHeaders headers) {
+        try {
+            String jwtToken = jwtUtils.getToken(headers);
+            String name = jwtUtils.extractName(jwtToken);
+            return ResponseEntity.ok(!virtualClassService.notStudent(name));
+        } catch (RequestWithoutAuthorizationException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping(path = "")
@@ -99,7 +120,7 @@ public class VirtualClassController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
+            if (jwtUtils.isExpired(jwtToken)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             return ResponseEntity.ok(virtualClassService.getStudents());

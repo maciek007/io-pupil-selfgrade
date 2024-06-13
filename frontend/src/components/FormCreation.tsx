@@ -8,9 +8,10 @@ import {
     reset,
     getValues
 } from '@modular-forms/react';
-import {createForm} from "../services/FormService.tsx";
-import {FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput} from './formComponents';
-import {useNavigate} from 'react-router-dom';
+import { createForm, handleFormImport } from "../services/FormService.ts";
+import { FormHeader, FormFooter, TextInput, ColorButton, InputLabel, TextAreaInput } from './formComponents';
+import { useNavigate } from 'react-router-dom';
+
 
 
 export type FormCreationType = {
@@ -79,14 +80,12 @@ const initialValues = {
     },
 }
 
-//TODO: ADD VALIDATION
-
 const MIN_REQUIRED_QUESTIONS = 1;
 const MAX_QUESTIONS = 3;
 
 export default function FormCreation() {
     // Create nested form
-    const [FormCreation, {Form, Field, FieldArray}] = useForm<FormCreationType>({
+    const [FormCreation, { Form, Field, FieldArray }] = useForm<FormCreationType>({
         initialValues,
     });
 
@@ -101,12 +100,12 @@ export default function FormCreation() {
             () => {
                 // this will then display a text file
                 const json = JSON.parse(fileReader.result);
-                reset(FormCreation, {initialValues: json});
+                reset(FormCreation, { initialValues: json });
             },
             false,
         );
 
-        fileReader.readAsText(event.target.files[0],"URF-8");
+        fileReader.readAsText(event.target.files[0], "URF-8");
         //setSelectedFile(event.target.files[0]);
     };
 
@@ -136,7 +135,6 @@ export default function FormCreation() {
             onSubmit={(values) => handleSubmit(values)}
         >
             <FormHeader handleFormImport={handleFormImport} of={FormCreation} heading="Tworzenie formularza" handleFormExport={handleFormExport}/>
-
             <div className="space-y-5">
                 {/* Long Questions - Required */}
                 <div
@@ -155,7 +153,7 @@ export default function FormCreation() {
                     </div>
                     <div>
                         <FieldArray name={`longQuestions.questions`}
-                                    validate={[required('To pole jest wymagane'), minLength(MIN_REQUIRED_QUESTIONS, `Wymagane jest co najmniej ${MIN_REQUIRED_QUESTIONS} pytanie`), maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`)]}
+                            validate={[required('To pole jest wymagane'), minLength(MIN_REQUIRED_QUESTIONS, `Wymagane jest co najmniej ${MIN_REQUIRED_QUESTIONS} pytanie`), maxLength(MAX_QUESTIONS, `Maksymalna liczba pytań to ${MAX_QUESTIONS}`)]}
                         >
                             {(fieldArray) => (
                                 <>
@@ -583,6 +581,7 @@ export default function FormCreation() {
 
 
             </div>
+
 
 
             <FormFooter of={FormCreation} handleFormExport={handleFormExport}/>

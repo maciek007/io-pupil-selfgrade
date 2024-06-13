@@ -1,41 +1,34 @@
 import "./AnswerScreen.css"
 
-import { useNavigate, useSearchParams } from "react-router-dom";
-import {useEffect, useState} from "react";
-import {getForms} from "../services/FormService.tsx";
+import { useState } from "react";
 import QuestionsCarousel from "./QuestionsCarousel.tsx";
+import { useLocation } from "react-router-dom";
 
 
 export default function AnswerScreen() {
-    const navigate = useNavigate();
-    const [fillableForms, setFillableForms] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0)
-    //const [searchParams] = useSearchParams();
+    const { state } = useLocation();
+    const { forms: fillableForms } = state
 
-    useEffect(() => {
-        getForms().then((res)=>{setFillableForms(res.data);
-            console.log(res.data)}); }, []);
     const handleNextPerson = () => {
-        setCurrentIndex(currentIndex+1);
+        setCurrentIndex(currentIndex + 1);
     }
     const handlePrevPerson = () => {
-        setCurrentIndex(currentIndex-1);
+        setCurrentIndex(currentIndex - 1);
     }
 
 
-    if(fillableForms) {
-        //console.log(fillableForms, fillableForms.length);
-        //fillableForms.map((form, index) => console.log(index+"/"+fillableForms.length));
+    if (fillableForms) {
         return (
             <>
                 {Array.from(fillableForms).map((form, index) => (
-                        <>
-                            <div>
-                                <h1>{form.studentName} <span>{index + 1} / {fillableForms.length}</span></h1>
-                            </div>
-                            <QuestionsCarousel questions={form.form} name={form.studentName} nextPerson={handleNextPerson}/>
-                        </>
-                    ))[currentIndex]}
+                    <>
+                        <div>
+                            <h1>{form.studentName} <span>{index + 1} / {fillableForms.length}</span></h1>
+                        </div>
+                        <QuestionsCarousel questions={form.form} name={form.studentName} nextPerson={handleNextPerson} />
+                    </>
+                ))[currentIndex]}
             </>
         );
     }

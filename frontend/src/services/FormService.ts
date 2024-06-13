@@ -1,15 +1,17 @@
-import { getToken } from "./StorageService.tsx";
+import { getToken } from "./StorageService.ts";
 import axios from "axios";
 import { environment } from "../environments/environment.tsx";
 import { FormCreationType } from "../components/FormCreation.tsx";
+
 export const createForm = (form: FormCreationType) => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     };
-    console.log(form)
+
     const data = {
         longQuestionFields: form.longQuestions.questions,
         shortQuestionFields: form.shortQuestions.questions,
@@ -20,8 +22,7 @@ export const createForm = (form: FormCreationType) => {
     return axios.post(environment.backEnd + "/form", data, axiosConfig);
 }
 
-export const getForms = () =>
-{
+export const getForms = () => {
     const axiosConfig = {
         headers: {
             'Authorization': 'Bearer ' + getToken()
@@ -30,13 +31,13 @@ export const getForms = () =>
     return axios.get(environment.backEnd + "/game/getForms", axiosConfig);
 }
 
-export const sendAnswer = (name: string, data) =>
-{
+export const sendAnswer = (name: string, data) => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     };
-    return axios.post(environment.backEnd + "/answer/" + name, data, axiosConfig);
+    return axios.post(environment.backEnd + "/form/answer/" + name, data, axiosConfig);
 }
