@@ -16,7 +16,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = API_PATH.root + API_PATH.virtualClass)
 public class VirtualClassController {
     private final VirtualClassService virtualClassService;

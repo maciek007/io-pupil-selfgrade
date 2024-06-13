@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = API_PATH.root + API_PATH.form)
 public class FormsController {
     private final VirtualClassService virtualClassService;
