@@ -44,28 +44,6 @@ function WaitingRoomScreen() {
 
     const gameAddress = environment.gameAddress;
 
-    // useEffect(() => {
-    //     getAccessCode().then((response) => {
-    //         setGameCode(response.data);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     });
-    //     getClassName().then((response) => {
-    //         setClassName(response.data);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     });
-    //     getStudents().then((response) => {
-    //         setStudentList(response.data);
-    //     });
-    //     isTeacher().then((response) => {
-    //         setIsTeacher(response.data);
-    //     });
-    //     isStudent().then((response) => {
-    //         setIsStudent(response.data);
-    //     });
-    // });
-
     useEffect(() => {
         const fetchData = async () => {
             try {
