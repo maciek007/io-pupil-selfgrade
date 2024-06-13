@@ -1,0 +1,28 @@
+{
+  "longQuestions": {
+    "label": "Długie pytania",
+    "questions": ["Jakie zalety u niej/niego widzisz?"]
+  },
+  "shortQuestions": {
+    "label": "Krótkie pytania",
+    "questions": []
+  },
+  "multipleSelectionQuestions": {
+    "label": "Pytanie wielokrotnego wyboru",
+    "questions": [{
+        "question": "",
+        "options": [""]
+      }]
+  },
+  "singleSelectionQuestions": {
+    "label": "Pytanie jednokrotnego wyboru",
+    "questions": [{
+        "question": "",
+        "options": [""]
+      }]
+  },
+  "checkboxQuestions": {
+    "label": "Pytania tak/nie",
+    "questions": []
+  }
+}
