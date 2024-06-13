@@ -42,5 +42,5 @@ export const sendAnswer = (name: string, data) => {
             'Authorization': 'Bearer ' + getToken()
         }
     };
-    return axios.post(environment.backEnd + "/answer/" + name, data, axiosConfig);
+    return axios.post(environment.backEnd + "/form/answer/" + name, data, axiosConfig);
 }

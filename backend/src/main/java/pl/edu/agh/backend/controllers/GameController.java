@@ -52,7 +52,7 @@ public class GameController {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
 
-            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+            if (jwtUtils.isExpired(jwtToken)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             if (VirtualClassService.isAccessible) {

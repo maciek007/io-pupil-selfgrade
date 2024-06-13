@@ -18,20 +18,20 @@ function DisplayingRoomScreen() {
     const gameAddress = environment.gameAddress;
 
     useEffect(() => {
-        getAccessCode().then((response) => {
-            setGameCode(response.data);
-        }).catch((err) => {
-            console.log(err);
-        });
-        getClassName().then((response) => {
-            setClassName(response.data);
-        }).catch((err) => {
-            console.log(err);
-        });
-        getStudents().then((response) => {
-            setStudentList(response.data);
-        });
-    });
+        const fetchData = async () => {
+            const [gameCodeResponse, classNameResponse, studentListResponse] = await Promise.all([
+                getAccessCode(),
+                getClassName(),
+                getStudents(),
+            ]);
+
+            setGameCode(gameCodeResponse.data);
+            setClassName(classNameResponse.data);
+            setStudentList(studentListResponse.data);
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className="wrapper">
