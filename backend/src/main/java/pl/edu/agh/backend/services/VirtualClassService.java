@@ -141,10 +141,12 @@ public class VirtualClassService {
         if (name.equals(answerer)) {
             return false;
         }
+
         Student student = virtualClass.getStudents().get(name);
         if (student == null) {
             return false;
         }
+
         try {
             if (!answerJsonValidator.validate(answerJson)) {
                 throw new IllegalArgumentException("Invalid json");

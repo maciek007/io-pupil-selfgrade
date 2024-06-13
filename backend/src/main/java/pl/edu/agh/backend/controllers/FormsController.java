@@ -46,7 +46,7 @@ public class FormsController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+            if (jwtUtils.isExpired(jwtToken)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             if (virtualClassService.addAnswer(name, authName, json)) {
@@ -63,8 +63,7 @@ public class FormsController {
     public ResponseEntity<List<Answer>> getAnonymousAnswers(@PathVariable String name, @RequestHeader HttpHeaders headers) {
         try {
             String jwtToken = jwtUtils.getToken(headers);
-            String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notStudent(authName)) {
+            if (jwtUtils.isExpired(jwtToken)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             return ResponseEntity.ok(virtualClassService.getAnonymousAnswers(name));

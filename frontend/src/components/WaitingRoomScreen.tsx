@@ -46,23 +46,19 @@ function WaitingRoomScreen() {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const [gameCodeResponse, classNameResponse, studentListResponse, isTeacherResponse, isStudentResponse] = await Promise.all([
-                    getAccessCode(),
-                    getClassName(),
-                    getStudents(),
-                    isTeacher(),
-                    isStudent()
-                ]);
+            const [gameCodeResponse, classNameResponse, studentListResponse, isTeacherResponse, isStudentResponse] = await Promise.all([
+                getAccessCode(),
+                getClassName(),
+                getStudents(),
+                isTeacher(),
+                isStudent()
+            ]);
 
-                setGameCode(gameCodeResponse.data);
-                setClassName(classNameResponse.data);
-                setStudentList(studentListResponse.data);
-                setIsTeacher(isTeacherResponse.data);
-                setIsStudent(isStudentResponse.data);
-            } catch (err) {
-                console.log("Error fetching data:", err);
-            }
+            setGameCode(gameCodeResponse.data);
+            setClassName(classNameResponse.data);
+            setStudentList(studentListResponse.data);
+            setIsTeacher(isTeacherResponse.data);
+            setIsStudent(isStudentResponse.data);
         };
 
         fetchData();

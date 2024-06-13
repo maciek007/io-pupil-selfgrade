@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 
 
 export default function AnswerScreen() {
-    // const [fillableForms, setFillableForms] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0)
     const { state } = useLocation();
     const { forms: fillableForms } = state

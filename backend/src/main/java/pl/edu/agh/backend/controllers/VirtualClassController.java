@@ -120,7 +120,7 @@ public class VirtualClassController {
         try {
             String jwtToken = jwtUtils.getToken(headers);
             String authName = jwtUtils.extractName(jwtToken);
-            if (jwtUtils.isExpired(jwtToken) || virtualClassService.notTeacher(authName)) {
+            if (jwtUtils.isExpired(jwtToken)) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
             return ResponseEntity.ok(virtualClassService.getStudents());
