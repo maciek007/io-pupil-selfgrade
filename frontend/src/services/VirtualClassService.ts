@@ -2,17 +2,12 @@ import { getToken } from "./StorageService.ts";
 import axios from "axios";
 import { environment } from "../environments/environment.tsx";
 
-const axiosConfig = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getToken()
-    }
-}
 
 export const createVirtualClass = (name: string) => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     }
@@ -24,6 +19,7 @@ export const deleteVirtualClass = () => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     }
@@ -34,6 +30,7 @@ export const getAccessCode = () => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     }
@@ -44,6 +41,7 @@ export const getStudents = () => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     }
@@ -54,6 +52,7 @@ export const getClassName = () => {
     const axiosConfig = {
         headers: {
             'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Authorization': 'Bearer ' + getToken()
         }
     }
